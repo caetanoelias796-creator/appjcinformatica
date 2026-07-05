@@ -302,3 +302,5 @@ MIT © 2026 PizzaFlow
 <p align="center">
   Feito com ❤️ e muito 🍕
 </p>
+
+<!-- Trigger deploy -->
