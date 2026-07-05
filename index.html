@@ -2,915 +2,143 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JC Informática | Assistência Técnica | Nova Petrópolis, RS</title>
-  <meta name="description" content="JC Informática - Assistência técnica especializada, equipamentos gamer e automação comercial em Nova Petrópolis, RS. Mais de 10 anos de experiência." />
-  <meta name="keywords" content="assistência técnica, computadores, notebooks, gamer, automação comercial, Nova Petrópolis, RS" />
-  
-  <!-- Favicons -->
-  <link rel="icon" type="image/svg+xml" href="imagem/logo.svg" />
-  <link rel="apple-touch-icon" href="imagem/SIMBOLO BRANCO.png" />
-  
-  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#E53935" />
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="PizzaFlow — O melhor delivery de pizza da cidade. Peça agora e receba em até 40 minutos com rastreamento em tempo real." />
+  <meta name="keywords" content="pizza, delivery, pedido online, pizzaria, pizzaflow" />
+  <meta name="author" content="PizzaFlow" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.jcinformatica.net.br/" />
-  <meta property="og:title" content="JC Informática | Assistência Técnica Especializada em Nova Petrópolis" />
-  <meta property="og:description" content="Computadores, notebooks, setups gamer de alta performance e automação comercial. Mais de 20 anos de experiência com agilidade e confiança!" />
-  <meta property="og:image" content="https://www.jcinformatica.net.br/imagem/LOGO%20JC%20INFORM%C3%81TICA.png" />
+  <meta property="og:title" content="PizzaFlow — Delivery de Pizza" />
+  <meta property="og:description" content="O melhor delivery de pizza da cidade. Peça agora!" />
+  <meta property="og:image" content="/icons/icon-512.png" />
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="JC Informática | Assistência Técnica" />
-  <meta property="twitter:description" content="Computadores, notebooks, setups gamer e automação comercial em Nova Petrópolis, RS." />
-  <meta property="twitter:image" content="https://www.jcinformatica.net.br/imagem/LOGO%20JC%20INFORM%C3%81TICA.png" />
-  
-  <!-- JSON-LD LocalBusiness Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "JC Informática",
-    "image": "https://www.jcinformatica.net.br/imagem/LOGO%20JC%20INFORM%C3%81TICA.png",
-    "@id": "https://www.jcinformatica.net.br/#localbusiness",
-    "url": "https://www.jcinformatica.net.br/",
-    "telephone": "+55-54-3281-4464",
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Av. 15 de Novembro, 1540, Sala 110, Centro",
-      "addressLocality": "Nova Petrópolis",
-      "addressRegion": "RS",
-      "postalCode": "95150-000",
-      "addressCountry": "BR"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": -29.37895,
-      "longitude": -51.11417
-    },
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "09:00",
-        "closes": "12:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "13:20",
-        "closes": "18:30"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Saturday",
-        "opens": "08:30",
-        "closes": "12:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Saturday",
-        "opens": "13:30",
-        "closes": "16:00"
-      }
-    ],
-    "sameAs": [
-      "https://www.facebook.com/jcinformatica.br",
-      "https://www.instagram.com/jcinformaticanp/"
-    ]
-  }
-  </script>
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PizzaFlow — Delivery de Pizza" />
+  <meta name="twitter:description" content="O melhor delivery de pizza da cidade." />
 
-  <link rel="stylesheet" href="css/style.css?v=13" />
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="PizzaFlow" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="PizzaFlow" />
+  <meta name="msapplication-TileColor" content="#E53935" />
+
+  <!-- Preconnect for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+
+  <!-- Google Fonts: Poppins + Inter -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Design System Styles (order matters) -->
+  <link rel="stylesheet" href="/src/css/design-system.css" />
+  <link rel="stylesheet" href="/src/css/animations.css" />
+  <link rel="stylesheet" href="/src/css/components.css" />
+  <link rel="stylesheet" href="/src/css/layout.css" />
+
+  <title>PizzaFlow — Delivery de Pizza</title>
 </head>
 <body>
 
-  <!-- ========== HEADER / NAV ========== -->
-  <header id="header">
-    <div class="container header-inner">
-      <a href="/" class="logo" aria-label="JC Informática Home">
-        <img src="imagem/LOGO JC INFORMÁTICA.png" alt="JC Informática" class="logo-img" />
-      </a>
+  <!-- ═══════════════════════════════════════════
+       APP SHELL
+       Root container managed by router + components
+       ═══════════════════════════════════════════ -->
+  <div id="app" role="application" aria-label="PizzaFlow App">
 
-      <nav id="main-nav" aria-label="Navegação principal">
-        <ul>
-          <li><a href="/" class="active">Início</a></li>
-          <li><a href="#servicos">Serviços</a></li>
-          <li><a href="#gamer">Gamer</a></li>
-          <li><a href="#builds">Builds</a></li>
-          <li><a href="#automacao">Automação</a></li>
-          <li><a href="#sobre">Sobre</a></li>
-          <li><a href="contato" class="nav-cta">Contato</a></li>
-        </ul>
-      </nav>
-
-      <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- ========== HERO SECTION ========== -->
-  <section id="hero">
-    <div class="hero-bg">
-      <div class="triangle-grid" aria-hidden="true"></div>
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="hero-glow-2" aria-hidden="true"></div>
-    </div>
-
-    <div class="container hero-inner">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          <i class="fas fa-bolt"></i>&nbsp; Assistência Técnica Especializada
+    <!-- SPLASH SCREEN — shown during initial load -->
+    <div id="splash-screen" class="splash-screen" aria-hidden="false">
+      <div class="splash-content">
+        <div class="splash-logo-wrapper">
+          <div class="splash-icon" aria-label="Pizza">🍕</div>
+          <h1 class="splash-title">PizzaFlow</h1>
+          <p class="splash-tagline">Sabor que chega até você</p>
         </div>
-        <h1 class="hero-title">
-          Potência e precisão<br />a cada <span class="accent text-glow">clique</span>.
-        </h1>
-        <p class="hero-subtitle">
-          Soluções completas em informática para você e sua empresa.<br />
-          Atendimento presencial em <strong style="color:var(--white)">Nova Petrópolis, RS</strong>.
-        </p>
-        <div class="hero-actions">
-          <a href="https://wa.me/555432814464" target="_blank" rel="noopener" class="btn btn-whatsapp">
-            <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
-          </a>
-          <a href="#servicos" class="btn btn-outline">
-            <i class="fas fa-tools"></i> Ver Serviços
-          </a>
-        </div>
-
-        <div class="hero-tags">
-          <span><i class="fas fa-check-circle"></i> Reparo de Peças</span>
-          <span><i class="fas fa-check-circle"></i> Proteção Antivírus</span>
-          <span><i class="fas fa-check-circle"></i> Otimização</span>
-        </div>
-      </div>
-
-      <div class="hero-visual" aria-hidden="true">
-        <div class="laptop-wrapper">
-          <div class="glow-ring"></div>
-          <div class="hero-logo-big">
-            <img src="imagem/SIMBOLO BRANCO.png" alt="JC Informática" class="hero-logo-img" />
+        <div class="splash-loader" role="progressbar" aria-label="Carregando...">
+          <div class="splash-loader-track">
+            <div class="splash-loader-fill"></div>
           </div>
-          <div class="orbit orbit-1"><div class="orbit-dot"></div></div>
-          <div class="orbit orbit-2"><div class="orbit-dot"></div></div>
-          <div class="orbit orbit-3"><div class="orbit-dot"></div></div>
         </div>
       </div>
     </div>
 
-    <!-- Marquee strip -->
-    <div class="marquee-strip" aria-hidden="true">
-      <div class="marquee-track">
-        <span>EQUIPAMENTOS GAMER</span>
-        <i class="fas fa-bolt"></i>
-        <span>AUTOMAÇÃO COMERCIAL</span>
-        <i class="fas fa-bolt"></i>
-        <span>ASSISTÊNCIA TÉCNICA</span>
-        <i class="fas fa-bolt"></i>
-        <span>CERTIFICADO DIGITAL</span>
-        <i class="fas fa-bolt"></i>
-        <span>REDES & INFRAESTRUTURA</span>
-        <i class="fas fa-bolt"></i>
-        <span>SUPORTE ESPECIALIZADO</span>
-        <i class="fas fa-bolt"></i>
-      </div>
-    </div>
-  </section>
+    <!-- MAIN CONTENT — pages are injected here by the router -->
+    <main
+      id="main-content"
+      class="main-content"
+      role="main"
+      aria-label="Conteúdo principal"
+      tabindex="-1"
+    ></main>
 
-  <!-- ========== STATS BAR ========== -->
-  <section id="stats" class="stats-bar">
-    <div class="container stats-inner">
-      <div class="stat-item">
-        <span class="stat-number" data-target="13000">0</span><span class="stat-plus">+</span>
-        <p>Clientes Atendidos</p>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="20">0</span><span class="stat-plus">+</span>
-        <p>Anos de Experiência</p>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="98">0</span><span class="stat-plus">%</span>
-        <p>Satisfação dos Clientes</p>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-number" data-target="24">0</span><span class="stat-plus">h</span>
-        <p>Prazo Médio de Entrega</p>
-      </div>
-    </div>
-  </section>
+    <!-- BOTTOM NAVIGATION — persistent across pages -->
+    <nav
+      id="bottom-nav"
+      class="bottom-nav"
+      role="navigation"
+      aria-label="Navegação principal"
+    ></nav>
 
-  <!-- ========== SERVICES SECTION ========== -->
-  <section id="servicos" class="section-dark">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">O que fazemos</span>
-        <h2>Serviços de <span class="accent">Assistência Técnica</span></h2>
-        <p>Diagnóstico rápido e soluções eficientes para o seu equipamento.</p>
-      </div>
+    <!-- FLOATING CART BUTTON — appears when cart has items -->
+    <div
+      id="floating-cart"
+      class="floating-cart-container"
+      aria-label="Carrinho de compras"
+    ></div>
 
-      <div class="cards-grid">
+    <!-- TOAST NOTIFICATIONS — stacked notifications container -->
+    <div
+      id="toast-container"
+      class="toast-container"
+      role="region"
+      aria-live="polite"
+      aria-atomic="false"
+      aria-label="Notificações"
+    ></div>
 
-        <article class="service-card">
-          <div class="card-icon"><i class="fas fa-tools"></i></div>
-          <h3>Reparo e Substituição de Peças</h3>
-          <p>Identificamos e substituímos componentes defeituosos com peças originais ou compatíveis de alta qualidade.</p>
-          <ul class="card-list">
-            <li><i class="fas fa-check"></i> Placas-mãe e processadores</li>
-            <li><i class="fas fa-check"></i> Fontes de alimentação</li>
-            <li><i class="fas fa-check"></i> Telas e teclados de notebooks</li>
-          </ul>
-          <a href="contato" class="card-link">Solicitar Serviço <i class="fas fa-arrow-right"></i></a>
-        </article>
+    <!-- DIALOG / MODAL — overlays -->
+    <div
+      id="dialog-container"
+      class="dialog-container"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    ></div>
 
-        <article class="service-card featured">
-          <div class="featured-badge">Mais Procurado</div>
-          <div class="card-icon"><i class="fas fa-shield-virus"></i></div>
-          <h3>Proteção contra Vírus e Malware</h3>
-          <p>Remoção completa de ameaças digitais e instalação de soluções de segurança robustas para proteção contínua.</p>
-          <ul class="card-list">
-            <li><i class="fas fa-check"></i> Remoção de vírus e spyware</li>
-            <li><i class="fas fa-check"></i> Instalação de antivírus</li>
-            <li><i class="fas fa-check"></i> Backup de dados importantes</li>
-          </ul>
-          <a href="contato" class="card-link">Solicitar Serviço <i class="fas fa-arrow-right"></i></a>
-        </article>
+    <!-- SEARCH OVERLAY — full-screen search experience -->
+    <div
+      id="search-overlay"
+      class="search-overlay"
+      role="search"
+      aria-label="Busca de produtos"
+      aria-hidden="true"
+    ></div>
 
-        <article class="service-card">
-          <div class="card-icon"><i class="fas fa-tachometer-alt"></i></div>
-          <h3>Otimização de Desempenho</h3>
-          <p>Seu computador lento? Realizamos limpeza, formatação e configuração para máxima performance.</p>
-          <ul class="card-list">
-            <li><i class="fas fa-check"></i> Formatação e reinstalação</li>
-            <li><i class="fas fa-check"></i> Limpeza física interna</li>
-            <li><i class="fas fa-check"></i> Upgrade de memória e SSD</li>
-          </ul>
-          <a href="contato" class="card-link">Solicitar Serviço <i class="fas fa-arrow-right"></i></a>
-        </article>
+    <!-- PWA INSTALL PROMPT — custom install banner -->
+    <div
+      id="pwa-install-prompt"
+      class="pwa-install-prompt"
+      role="banner"
+      aria-label="Instalar PizzaFlow"
+      hidden
+    ></div>
 
-        <article class="service-card">
-          <div class="card-icon"><i class="fas fa-network-wired"></i></div>
-          <h3>Redes e Infraestrutura</h3>
-          <p>Instalação e configuração de redes corporativas e residenciais com segurança e estabilidade.</p>
-          <ul class="card-list">
-            <li><i class="fas fa-check"></i> Cabeamento estruturado</li>
-            <li><i class="fas fa-check"></i> Configuração de roteadores</li>
-            <li><i class="fas fa-check"></i> Wi-Fi empresarial</li>
-          </ul>
-          <a href="contato" class="card-link">Solicitar Serviço <i class="fas fa-arrow-right"></i></a>
-        </article>
+  </div><!-- /#app -->
 
-        <article class="service-card">
-          <div class="card-icon"><i class="fas fa-database"></i></div>
-          <h3>Montagem de PC Gamer</h3>
-          <p>Monte o PC Gamer dos seus sonhos com quem entende do assunto! Montagem profissional, organização de cabos e garantia de máxima performance.</p>
-          <ul class="card-list">
-            <li><i class="fas fa-check"></i>Montagem</li>
-            <li><i class="fas fa-check"></i>Organização de cabos</li>
-            <li><i class="fas fa-check"></i>Configuração</li>
-          </ul>
-          <a href="contato" class="card-link">Solicitar Serviço <i class="fas fa-arrow-right"></i></a>
-        </article>
+  <!-- App Entry Point -->
+  <script type="module" src="/src/main.js"></script>
 
-        <article class="service-card">
-          <div class="card-icon"><i class="fas fa-print"></i></div>
-          <h3>Impressoras e Periféricos</h3>
-          <p>Manutenção, recarga de toner e conserto de impressoras jato de tinta e laser.</p>
-          <ul class="card-list">
-            <li><i class="fas fa-check"></i> Recarga e troca de toner</li>
-            <li><i class="fas fa-check"></i> Desobstrução de cabeça</li>
-            <li><i class="fas fa-check"></i> Configuração em rede</li>
-          </ul>
-          <a href="contato" class="card-link">Solicitar Serviço <i class="fas fa-arrow-right"></i></a>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== GAMER SECTION ========== -->
-  <section id="gamer" class="section-gamer">
-    <div class="gamer-bg-pattern" aria-hidden="true"></div>
-    <div class="container gamer-inner">
-      <div class="gamer-text">
-        <span class="section-tag">Para Gamers</span>
-        <h2>Equipamentos <span class="accent">Gamer</span><br />de Alta Performance</h2>
-        <p>
-          Montamos e configuramos seu setup gamer do zero. Peças selecionadas,
-          desempenho máximo e suporte especializado para você dominar os games.
-        </p>
-        <ul class="gamer-features">
-          <li><i class="fas fa-microchip"></i> Processadores Intel e AMD top de linha</li>
-          <li><i class="fas fa-memory"></i> Placas de vídeo GeForce e Radeon</li>
-          <li><i class="fas fa-hdd"></i> SSDs NVMe de alta velocidade</li>
-          <li><i class="fas fa-fan"></i> Sistemas de refrigeração avançados</li>
-          <li><i class="fas fa-keyboard"></i> Periféricos gamer: mouse, teclado e headset</li>
-          <li><i class="fas fa-desktop"></i> Gabinetes com iluminação RGB</li>
-        </ul>
-        <a href="contato" class="btn btn-primary">
-          <i class="fas fa-gamepad"></i> Monte seu Setup
-        </a>
-      </div>
-
-      <div class="gamer-visual" aria-hidden="true">
-        <div class="gamer-card-stack">
-          <div class="gamer-stat-card">
-            <i class="fas fa-microchip"></i>
-            <div>
-              <strong>CPU</strong>
-              <span>Intel Core i9 / AMD Ryzen 9</span>
-            </div>
-          </div>
-          <div class="gamer-stat-card accent-card">
-            <i class="fas fa-tv"></i>
-            <div>
-              <strong>GPU</strong>
-              <span>RTX 4090 / RX 7900 XTX</span>
-            </div>
-          </div>
-          <div class="gamer-stat-card">
-            <i class="fas fa-memory"></i>
-            <div>
-              <strong>RAM</strong>
-              <span>DDR5 32GB / 64GB</span>
-            </div>
-          </div>
-          <div class="gamer-stat-card">
-            <i class="fas fa-hdd"></i>
-            <div>
-              <strong>Storage</strong>
-              <span>NVMe SSD 2TB</span>
-            </div>
-          </div>
-          <div class="gamer-fps-badge">
-            <span class="fps-number">240</span>
-            <span class="fps-label">FPS</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== SLIDER REPAROS / CABLE MANAGEMENT (Antes e Depois) ========== -->
-  <section id="reparos-slider" class="section-dark" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Antes & Depois</span>
-        <h2>Excelência em <span class="accent">Montagem & Limpeza</span></h2>
-        <p>Arraste a barra para comparar o estado de um computador antes de receber a nossa assistência técnica e após a nossa limpeza física rigorosa e cable management profissional.</p>
-      </div>
-
-      <div class="slider-comparison-container">
-        <!-- Imagem de Depois (Fundo) -->
-        <div class="slider-image img-after">
-          <img src="imagem/pc_after.png" alt="PC Gamer com Cable Management impecável e limpo" loading="lazy" />
-          <span class="slider-label label-after">Depois (JC)</span>
-        </div>
-        
-        <!-- Imagem de Antes (Sobreposta) -->
-        <div class="slider-image img-before" id="before-img-wrapper">
-          <img src="imagem/pc_before.png" alt="PC antigo poeirento e com cabos desorganizados" loading="lazy" />
-          <span class="slider-label label-before">Antes</span>
-        </div>
-        
-        <!-- Alça de Arrasto (Handle) -->
-        <div class="slider-handle" id="slider-drag-handle">
-          <div class="handle-line"></div>
-          <div class="handle-button">
-            <i class="fas fa-arrows-alt-h"></i>
-          </div>
-          <div class="handle-line"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== SUGESTÕES DE BUILDS ========== -->
-  <section id="builds" class="section-builds">
-    <div class="container">
-      <div class="builds-section-header">
-        <span class="section-tag">Monte o seu PC</span>
-        <h2>Sugestões de <span class="accent">BUILDS</span></h2>
-        <p>Confira nossas configurações recomendadas baseadas na resolução e performance que você deseja alcançar nos seus jogos favoritos.</p>
-      </div>
-
-      <!-- SIMULADOR DE SETUP INTERATIVO -->
-      <div class="simulator-wrapper">
-        <div class="simulator-header">
-          <h3><i class="fas fa-sliders-h"></i> Simulador de Setup Gamer</h3>
-          <p>Selecione as opções abaixo para encontrar a configuração recomendada para você!</p>
-        </div>
-        <div class="simulator-body">
-          <div class="sim-group">
-            <span class="sim-label">1. Qual é o seu objetivo de uso principal?</span>
-            <div class="sim-options" id="sim-objective">
-              <button type="button" class="sim-opt active" data-value="casual">
-                <i class="fas fa-gamepad"></i> Jogos Casuais / eSports (ex: CS, Valorant)
-              </button>
-              <button type="button" class="sim-opt" data-value="heavy">
-                <i class="fas fa-crosshairs"></i> Jogos Pesados / Lançamentos AAA (ex: Cyberpunk)
-              </button>
-              <button type="button" class="sim-opt" data-value="work">
-                <i class="fas fa-briefcase"></i> Trabalho / Stream / Edição de Vídeo
-              </button>
-            </div>
-          </div>
-          <div class="sim-group">
-            <span class="sim-label">2. Qual a sua resolução de preferência?</span>
-            <div class="sim-options" id="sim-resolution">
-              <button type="button" class="sim-opt active" data-value="fhd">
-                <i class="fas fa-desktop"></i> Full HD (1080p)
-              </button>
-              <button type="button" class="sim-opt" data-value="qhd">
-                <i class="fas fa-expand-arrows-alt"></i> Quad HD (1440p)
-              </button>
-              <button type="button" class="sim-opt" data-value="4k">
-                <i class="fas fa-tv"></i> Ultra HD (4K)
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="simulator-footer">
-          <div class="sim-recommendation">
-            <span class="rec-label">Recomendação ideal para você:</span>
-            <strong class="rec-value" id="sim-result">PC ENTRADA</strong>
-          </div>
-          <div class="sim-action">
-            <a href="https://wa.me/555432814464?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20a%20Build%20Entrada." id="sim-whatsapp-btn" target="_blank" rel="noopener" class="btn btn-whatsapp">
-              <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="builds-grid">
-
-        <!-- PC ENTRADA -->
-        <div class="build-card">
-          <div class="build-header build-entry">
-            <div class="build-badge">Entrada</div>
-            <div class="build-res">FHD 1080p</div>
-            <h3 class="build-name">PC ENTRADA</h3>
-          </div>
-          <div class="build-case-img">
-            <img src="imagem/redrogomoba.png"
-                 alt="Gabinete Redragon Carbon RGB"
-                 loading="lazy" />
-            <div class="build-case-label">Gabinete Redragon Carbon RGB</div>
-          </div>
-          <ul class="build-specs">
-            <li>
-              <span class="spec-label"><i class="fas fa-microchip"></i> Processador</span>
-              <span class="spec-value">AMD Ryzen 5 5600G</span>
-            </li>
-            <li>
-              <span class="spec-label"><i class="fas fa-tv"></i> Placa de Vídeo</span>
-              <span class="spec-value">Gráficos Integrados Vega 7</span>
-            </li>
-            <li>
-              <span class="spec-label"><i class="fas fa-memory"></i> Memória RAM</span>
-              <span class="spec-value">16GB DDR4 3200MHz</span>
-            </li>
-            <li>
-              <span class="spec-label"><i class="fas fa-hdd"></i> Armazenamento</span>
-              <span class="spec-value">500GB SSD NVMe M.2</span>
-            </li>
-          </ul>
-          <div class="build-performance">
-            <div class="perf-title"><i class="fas fa-gamepad"></i> Performance Esperada</div>
-            <div class="perf-tags">
-              <span><i class="fas fa-crosshairs"></i> CS:GO: 140fps</span>
-              <span><i class="fas fa-crosshairs"></i> Valorant: 120fps</span>
-            </div>
-          </div>
-          <a href="https://wa.me/555432814464?text=Olá!%20Tenho%20interesse%20na%20Build%20Entrada%20FHD%201080p." target="_blank" rel="noopener" class="btn btn-outline build-cta">
-            <i class="fab fa-whatsapp"></i> Quero este PC
-          </a>
-        </div>
-
-        <!-- PC INTERMEDIÁRIA -->
-        <div class="build-card build-featured">
-          <div class="build-header build-mid">
-            <div class="build-badge">Mais Vendida</div>
-            <div class="build-res">QuadHD 1440p</div>
-            <h3 class="build-name">PC INTERMEDIÁRIA</h3>
-          </div>
-          <div class="build-case-img">
-            <img src="imagem/pc game 2.PNG"
-                 alt="Gabinete Redragon Wideload Extreme"
-                 loading="lazy" />
-            <div class="build-case-label">Redragon Wideload Extreme</div>
-          </div>
-          <ul class="build-specs">
-            <li>
-              <span class="spec-label"><i class="fas fa-microchip"></i> Processador</span>
-              <span class="spec-value">Intel Core i5-13600K</span>
-            </li>
-            <li>
-              <span class="spec-label"><i class="fas fa-tv"></i> Placa de Vídeo</span>
-              <span class="spec-value">NVIDIA RTX 5060</span>
-            </li>
-            <li>
-              <span class="spec-label"><i class="fas fa-memory"></i> Memória RAM</span>
-              <span class="spec-value">32GB DDR5 5600MHz</span>
-            </li>
-            <li>
-              <span class="spec-label"><i class="fas fa-hdd"></i> Armazenamento</span>
-              <span class="spec-value">1TB SSD NVMe Gen4</span>
-            </li>
-          </ul>
-          <div class="build-performance">
-            <div class="perf-title"><i class="fas fa-gamepad"></i> Performance Esperada</div>
-            <div class="perf-tags">
-              <span><i class="fas fa-crosshairs"></i> Warzone: 140fps</span>
-              <span><i class="fas fa-crosshairs"></i> Cyberpunk: 80fps</span>
-            </div>
-          </div>
-          <a href="https://wa.me/555432814464?text=Olá!%20Tenho%20interesse%20na%20Build%20Intermediária%20QuadHD%201440p." target="_blank" rel="noopener" class="btn btn-primary build-cta">
-            <i class="fab fa-whatsapp"></i> Quero este PC Gamer
-          </a>
-        </div>
-
-        <!-- BUILD HIGH-END -->
-        <div class="build-card build-highend">
-          <div class="build-header build-high">
-            <div class="build-badge build-badge-gold">High-End</div>
-            <div class="build-res">Ultra 4K</div>
-            <h3 class="build-name">PC HIGH-END</h3>
-          </div>
-          <div class="build-case-img build-case-hero">
-            <img src="imagem/Gabinete NZXT H9.png"
-                 alt="Gabinete NZXT H9 Elite Branco"
-                 loading="lazy" />
-            <div class="build-case-label">NZXT H9 Elite Branco</div>
-          </div>
-          <ul class="build-specs">
-            <li>
-              <span class="spec-label"><i class="fas fa-microchip"></i> Processador</span>
-              <span class="spec-value">AMD Ryzen 7 7800X3D</span>
-            </li>
-            <li>
-              <span class="spec-label"><i class="fas fa-tv"></i> Placa de Vídeo</span>
-              <span class="spec-value">NVIDIA RTX 5070</span>
-            </li>
-            <li>
-              <span class="spec-label"><i class="fas fa-memory"></i> Memória RAM</span>
-              <span class="spec-value">32GB DDR5 6000MHz RGB</span>
-            </li>
-            <li>
-              <span class="spec-label"><i class="fas fa-hdd"></i> Armazenamento</span>
-              <span class="spec-value">2TB SSD NVMe Gen4 PRO</span>
-            </li>
-          </ul>
-          <div class="build-performance">
-            <div class="perf-title"><i class="fas fa-gamepad"></i> Performance Esperada</div>
-            <div class="perf-tags">
-              <span><i class="fas fa-trophy"></i> Qualquer jogo atual</span>
-              <span><i class="fas fa-trophy"></i> Acima de 100fps em 4K</span>
-            </div>
-          </div>
-          <a href="https://wa.me/555432814464?text=Olá!%20Tenho%20interesse%20na%20Build%20High-End%20Ultra%204K." target="_blank" rel="noopener" class="btn btn-primary build-cta build-cta-gold">
-            <i class="fab fa-whatsapp"></i> Quero este PC
-          </a>
-        </div>
-
-      </div><!-- .builds-grid -->
-
-      <p class="builds-note">
-        <i class="fas fa-info-circle"></i>
-        Todos os computadores gamer podem ser personalizados conforme seu orçamento e preferências.
-        <a href="https://wa.me/555432814464?text=Olá!%20Quero%20montar%20um%20PC%20gamer%20personalizado." target="_blank" rel="noopener">Fale com um especialista →</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- ========== AUTOMAÇÃO COMERCIAL ========== -->
-  <section id="automacao" class="section-dark">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Para Empresas</span>
-        <h2>Automação <span class="accent">Comercial</span></h2>
-        <p>Tecnologia para impulsionar seu negócio com eficiência e modernidade.</p>
-      </div>
-
-      <div class="automacao-grid">
-        <article class="automacao-card">
-          <div class="auto-icon"><i class="fas fa-cash-register"></i></div>
-          <h3>PDV & Frente de Caixa</h3>
-          <p>Sistemas completos de ponto de venda com emissão de NF-e, controle de estoque e relatórios gerenciais.</p>
-        </article>
-        <article class="automacao-card">
-          <div class="auto-icon"><i class="fas fa-barcode"></i></div>
-          <h3>Leitores e Coletores</h3>
-          <p>Leitores de código de barras, coletores de dados e balanças para lojas, supermercados e depósitos.</p>
-        </article>
-        <article class="automacao-card">
-          <div class="auto-icon"><i class="fas fa-print"></i></div>
-          <h3>Impressoras Fiscais</h3>
-          <p>Impressoras térmicas não-fiscais (TNF) e SAT Fiscal para emissão de cupons e documentos fiscais.</p>
-        </article>
-        <article class="automacao-card">
-          <div class="auto-icon"><i class="fas fa-cloud"></i></div>
-          <h3>Software de Gestão</h3>
-          <p>Implantação e suporte a ERPs e softwares de gestão empresarial para controle total do seu negócio.</p>
-        </article>
-        <article class="automacao-card">
-          <div class="auto-icon"><i class="fas fa-wifi"></i></div>
-          <h3>Redes Corporativas</h3>
-          <p>Infraestrutura de TI para empresas, com servidores, switches gerenciáveis e segurança de rede.</p>
-        </article>
-        <article class="automacao-card">
-          <div class="auto-icon"><i class="fas fa-headset"></i></div>
-          <h3>Suporte Técnico</h3>
-          <p>Planos de suporte técnico mensal presencial ou remoto para manter sua empresa sempre funcionando.</p>
-        </article>
-      </div>
-
-      <!-- CERTIFICADO DIGITAL -->
-      <div class="cert-banner">
-        <div class="cert-banner-icon">
-          <i class="fas fa-certificate"></i>
-        </div>
-        <div class="cert-banner-content">
-          <span class="cert-tag">Novo Serviço</span>
-          <h3>Certificado Digital</h3>
-          <p>Precisa de assinatura digital para <strong>CPF</strong> ou <strong>CNPJ</strong>? Faça por <strong>videoconferência</strong> ou <strong>presencial</strong> na nossa loja.</p>
-        </div>
-        <div class="cert-banner-actions">
-          <a href="https://wa.me/555497070322?text=Olá!%20Gostaria%20de%20agendar%20meu%20Certificado%20Digital." target="_blank" rel="noopener" class="btn btn-primary cert-btn">
-            <i class="fas fa-calendar-check"></i> Agende aqui o seu horário!
-          </a>
-          <div class="cert-modes">
-            <span><i class="fas fa-video"></i> Videoconferência</span>
-            <span><i class="fas fa-store"></i> Presencial</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ========== SOBRE ========== -->
-  <section id="sobre" class="section-sobre">
-    <div class="container sobre-inner">
-      <div class="sobre-visual" aria-hidden="true">
-        <div class="sobre-hex-grid">
-          <div class="hex"><i class="fas fa-star"></i></div>
-          <div class="hex accent"><i class="fas fa-award"></i></div>
-          <div class="hex"><i class="fas fa-handshake"></i></div>
-          <div class="hex accent"><i class="fas fa-clock"></i></div>
-          <div class="hex"><i class="fas fa-map-marker-alt"></i></div>
-          <div class="hex accent"><i class="fas fa-shield-alt"></i></div>
-        </div>
-      </div>
-      <div class="sobre-text">
-        <span class="section-tag">Quem somos</span>
-        <h2>Sobre a <span class="accent">JC Informática</span></h2>
-        <p>
-          Somos uma empresa localizada em <strong>Nova Petrópolis, RS</strong>,
-          especializada em soluções de informática para pessoas físicas e jurídicas.
-          Com mais de 20 anos de experiência, atendemos com agilidade, competência
-          e honestidade.
-        </p>
-        <p>
-          Nosso compromisso é oferecer o melhor serviço técnico com preços justos,
-          garantindo a satisfação total dos nossos clientes. Seja para um simples
-          reparo ou para a implantação de toda a infraestrutura de TI da sua empresa,
-          estamos prontos para ajudar.
-        </p>
-        <div class="sobre-values">
-          <div class="value-item">
-            <i class="fas fa-star"></i>
-            <div>
-              <strong>Qualidade</strong>
-              <p>Serviços realizados com excelência e peças de procedência.</p>
-            </div>
-          </div>
-          <div class="value-item">
-            <i class="fas fa-clock"></i>
-            <div>
-              <strong>Agilidade</strong>
-              <p>Diagnóstico rápido e prazo de entrega honesto.</p>
-            </div>
-          </div>
-          <div class="value-item">
-            <i class="fas fa-handshake"></i>
-            <div>
-              <strong>Confiança</strong>
-              <p>Transparência em todo o processo de atendimento.</p>
-            </div>
-          </div>
-        </div>
-        <a href="contato" class="btn btn-primary">
-          <i class="fas fa-map-marker-alt"></i> Como Chegar
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== DEPOIMENTOS ========== -->
-  <section id="depoimentos" class="section-dark">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Depoimentos</span>
-        <h2>O que nossos <span class="accent">clientes</span> dizem</h2>
-      </div>
-      <div class="testimonials-grid">
-        <article class="testimonial-card">
-          <div class="stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            <i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p>"Levei meu notebook com tela quebrada e foi consertado em 24 horas! Serviço rápido e com preço justo. Super recomendo!"</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">AM</div>
-            <div>
-              <strong>Ana Maria S.</strong>
-              <span>Nova Petrópolis, RS</span>
-            </div>
-          </div>
-        </article>
-        <article class="testimonial-card featured-testimonial">
-          <div class="stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            <i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p>"A JC Informática instalou toda a rede da minha loja e implantou o sistema de PDV. Excelente trabalho, atendimento profissional e pós-venda impecável!"</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">RB</div>
-            <div>
-              <strong>Roberto B.</strong>
-              <span>Empresário – Nova Petrópolis</span>
-            </div>
-          </div>
-        </article>
-        <article class="testimonial-card">
-          <div class="stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-            <i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p>"Meu PC estava muito lento, fizeram a limpeza, colocaram um SSD e ficou como novo! Atendimento excelente, muito honestos."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">CM</div>
-            <div>
-              <strong>Carlos M.</strong>
-              <span>Nova Petrópolis, RS</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== CTA SECTION ========== -->
-  <section id="cta" class="section-cta">
-    <div class="cta-bg-pattern" aria-hidden="true"></div>
-    <div class="container cta-inner">
-      <h2>Precisa de suporte técnico<br /><span class="accent">agora mesmo?</span></h2>
-      <p>Entre em contato conosco e resolva o problema do seu equipamento hoje!</p>
-      <div class="cta-actions">
-        <a href="https://wa.me/555432814464" target="_blank" rel="noopener" class="btn btn-whatsapp">
-          <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
-        </a>
-        <a href="contato" class="btn btn-outline-white">
-          <i class="fas fa-envelope"></i> Enviar Mensagem
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========== FOOTER ========== -->
-  <footer id="footer">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="logo" aria-label="JC Informática">
-          <img src="imagem/LOGO JC INFORMÁTICA.png" alt="JC Informática" class="logo-img" />
-        </a>
-        <p>Soluções completas em informática para você e sua empresa em Nova Petrópolis, RS.</p>
-        <div class="social-links">
-          <a href="https://www.facebook.com/jcinformatica.br" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.instagram.com/jcinformaticanp/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="https://wa.me/555432814464" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        </div>
-      </div>
-
-      <div class="footer-links">
-        <h4>Serviços</h4>
-        <ul>
-          <li><a href="#servicos">Assistência Técnica</a></li>
-          <li><a href="#servicos">Remoção de Vírus</a></li>
-          <li><a href="#servicos">Otimização</a></li>
-          <li><a href="#servicos">Montagem de PC Gamer</a></li>
-          <li><a href="#servicos">Redes</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-links">
-        <h4>Empresa</h4>
-        <ul>
-          <li><a href="#sobre">Sobre Nós</a></li>
-          <li><a href="#gamer">Equipamentos Gamer</a></li>
-          <li><a href="#automacao">Automação Comercial</a></li>
-          <li><a href="#depoimentos">Depoimentos</a></li>
-          <li><a href="contato">Contato</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-contact">
-        <h4>Contato</h4>
-        <ul>
-          <li><i class="fas fa-map-marker-alt"></i> Av. 15 de Novembro, 1540 – Sala 110, Centro, Nova Petrópolis – RS, 95150-000</li>
-          <li><i class="fas fa-phone"></i> (54) 3281-4464</li>
-          <li><i class="fas fa-envelope"></i> contato@jcinformatica.net.br</li>
-          <li><i class="fas fa-clock"></i> Seg–Sex: 9h–12h / 13h20–18h30</li>
-          <li><i class="fas fa-clock"></i> Sáb: 8h30–12h / 13h30–16h</li>
-          <li><i class="fas fa-clock"></i> Dom: Fechado</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="container">
-        <p>© 2026 JC Informática. Todos os direitos reservados.</p>
-        <p>
-          <a href="https://www.jcinformatica.net.br" target="_blank">www.jcinformatica.net.br</a>
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Back to top -->
-  <button id="back-to-top" aria-label="Voltar ao topo">
-    <i class="fas fa-chevron-up"></i>
-  </button>
-
-  <!-- WhatsApp Premium Departmental Widget -->
-  <div id="wa-widget-container">
-    <!-- Balão de Chat Principal (Chatbox) -->
-    <div id="wa-chatbox" class="wa-chatbox-hidden">
-      <div class="wa-chatbox-header">
-        <div class="wa-chatbox-avatar">
-          <div class="wa-avatar-img-wrapper">
-            <img src="imagem/SIMBOLO BRANCO.png" alt="JC Informática" />
-          </div>
-          <span class="wa-avatar-status"></span>
-        </div>
-        <div class="wa-chatbox-header-info">
-          <h4>Suporte JC Informática</h4>
-          <span>Online • Resposta imediata</span>
-        </div>
-        <button id="wa-chatbox-close" aria-label="Fechar chat">&times;</button>
-      </div>
-      <div class="wa-chatbox-body">
-        <div class="wa-message wa-msg-received">
-          <p>Olá! 💻✨ Seja bem-vindo à JC Informática.<br>Qual setor você gostaria de contatar no WhatsApp?</p>
-          <span class="wa-msg-time">Agora</span>
-        </div>
-        
-        <div class="wa-chatbox-options">
-          <a href="https://wa.me/555432814464?text=Olá!%20Gostaria%20de%20solicitar%20suporte%20técnico%20ou%20reparo%20para%20meu%20equipamento." 
-             target="_blank" rel="noopener" class="wa-opt-btn opt-support">
-            <span class="wa-opt-icon"><i class="fas fa-tools"></i></span>
-            <div class="wa-opt-text">
-              <strong>Suporte Técnico & Reparos</strong>
-              <span>Manutenção de PCs, notes e redes</span>
-            </div>
-          </a>
-          <a href="https://wa.me/555432814464?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20montagem%20ou%20peças%20de%20PC%20Gamer." 
-             target="_blank" rel="noopener" class="wa-opt-btn opt-gamer">
-            <span class="wa-opt-icon"><i class="fas fa-gamepad"></i></span>
-            <div class="wa-opt-text">
-              <strong>Setor Gamer & Setups</strong>
-              <span>Montagem de computadores sob medida</span>
-            </div>
-          </a>
-          <a href="https://wa.me/555497070322?text=Olá!%20Gostaria%20de%20informações%20ou%20agendamento%20para%20Certificado%20Digital." 
-             target="_blank" rel="noopener" class="wa-opt-btn opt-corporate">
-            <span class="wa-opt-icon"><i class="fas fa-certificate"></i></span>
-            <div class="wa-opt-text">
-              <strong>Certificado Digital</strong>
-              <span>Videoconferência e emissão presencial</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Botão Flutuante (Toggle) -->
-    <button id="wa-widget-toggle" aria-label="Abrir chat do WhatsApp">
-      <i class="fab fa-whatsapp"></i>
-      <span class="wa-toggle-pulse"></span>
-    </button>
-  </div>
-
-  <script src="js/main.js?v=14"></script>
 </body>
 </html>

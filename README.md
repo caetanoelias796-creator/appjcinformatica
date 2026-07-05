@@ -1,140 +1,304 @@
-# JC Informática — Website Oficial
+# PizzaFlow 🍕
 
-## 🏢 Sobre o Projeto
+> Sistema SaaS de Delivery de Pizza — Moderno, Rápido e Escalável
 
-Website institucional completo para a **JC Informática**, empresa de Nova Petrópolis, RS especializada em:
-- Assistência técnica para computadores e notebooks
-- Equipamentos gamer
-- Automação comercial
+![PizzaFlow](./public/images/banner_promo_1.png)
 
 ---
 
-## ✅ Funcionalidades Implementadas
+## 🚀 Visão Geral
 
-### Identidade Visual
-- Paleta oficial: **Preto Absoluto #000000**, **Azul Cósmico #0037FF**, **Branco Nebuloso #F5F5F5**
-- Tipografia: **Barlow Condensed 900** (títulos) + **Sora** (textos)
-- Monograma JC recriado em SVG com máxima fidelidade à identidade visual oficial
-- Padrão de triângulos animados no background (fiel ao material de apresentação)
-
-### Página Principal (`index.html`)
-- **Header fixo** com efeito glassmorphism ao rolar
-- **Menu mobile** com slide lateral animado
-- **Hero Section** com monograma JC grande, glows, anéis orbitais animados, badge com indicador ativo
-- **Marquee Strip** com serviços em loop infinito
-- **Barra de Estatísticas** com contadores animados (1200+ clientes, 10+ anos, 98% satisfação, 24h prazo)
-- **6 Cards de Serviços** com hover effects (borda azul, elevação, ícone preenchido)
-- **Seção Gamer** com cards de especificações (CPU, GPU, RAM, Storage) e badge FPS
-- **Automação Comercial** com 6 cards de serviços empresariais
-- **Sobre** com grid hexagonal de ícones e valores da empresa
-- **Depoimentos** com 3 cards de clientes + depoimento em destaque
-- **CTA Section** com botão WhatsApp e botão Mensagem
-- **Footer completo** com 4 colunas (brand, serviços, empresa, contato)
-- **Botão flutuante WhatsApp** (animado, canto inferior direito)
-- **Botão Voltar ao Topo**
-
-### Página de Contato (`contato.html`)
-- **Hero** com título e descrição
-- **Cards de Informações** (WhatsApp, telefone, e-mail, endereço, horários, redes sociais)
-- **Google Maps** embebido (Nova Petrópolis, RS) com filtro escuro
-- **Formulário de Contato** com validação e envio para Table API (`tables/contatos`)
-- **FAQ Accordion** nativo com 6 perguntas frequentes
-- **CTA WhatsApp** ao final
-- **Botão flutuante WhatsApp**
-
-### JavaScript (`js/main.js`)
-1. Header scroll effect (glassmorphism)
-2. Menu mobile (abrir/fechar, fechar ao clicar fora)
-3. Scroll spy (link ativo na navegação)
-4. Scroll reveal animations (IntersectionObserver)
-5. Contadores animados (easing cúbico)
-6. Botão voltar ao topo
-7. Smooth scroll para âncoras
-8. Formulário de contato (POST para `tables/contatos`)
-9. Marquee loop duplicado
-10. Gamer cards stagger entrance
-11. Hero badge fade-in
+**PizzaFlow** é uma aplicação SaaS de delivery de pizza construída com tecnologias web modernas e sem dependência de frameworks UI. O projeto é mobile-first, instalável como PWA e pronto para crescer até um sistema completo para pizzarias.
 
 ---
 
-## 📂 Estrutura de Arquivos
+## 🛠 Stack Tecnológica
+
+| Tecnologia | Versão | Propósito |
+|---|---|---|
+| **Vite** | ^5.2 | Build tool & Dev Server |
+| **HTML5** | — | Estrutura semântica |
+| **CSS3** | — | Design System completo |
+| **JavaScript ES Modules** | ES2022+ | Lógica da aplicação |
+| **PWA** | — | Instalável & Offline |
+
+> ❌ **Sem** React, Vue, Angular ou Bootstrap.
+
+---
+
+## 📁 Estrutura do Projeto
 
 ```
-index.html              — Página principal
-contato.html            — Página de contato + FAQ
-css/
-  style.css             — Estilos completos (~1800 linhas)
-js/
-  main.js               — JavaScript interativo
-assets/
-  JC_apresentacao.pdf   — Apresentação da identidade visual (referência)
-README.md
+frontend/
+├── public/
+│   ├── icons/          → Ícones PWA (192, 512, maskable)
+│   ├── images/         → Imagens dos produtos e banners
+│   └── sw.js           → Service Worker
+│
+├── src/
+│   ├── css/
+│   │   ├── design-system.css   → Tokens, Reset, Tipografia
+│   │   ├── animations.css      → Keyframes, Skeleton, Ripple
+│   │   ├── components.css      → Todos os componentes UI
+│   │   └── layout.css          → Grid, Responsividade
+│   │
+│   └── js/
+│       ├── components/         → Componentes reutilizáveis
+│       │   ├── Header.js
+│       │   ├── Banner.js
+│       │   ├── CategoryNav.js
+│       │   ├── ProductCard.js
+│       │   ├── FloatingCart.js
+│       │   ├── BottomNav.js
+│       │   ├── Toast.js
+│       │   ├── Dialog.js
+│       │   ├── SkeletonLoader.js
+│       │   └── SearchBar.js
+│       │
+│       ├── pages/              → Páginas da aplicação
+│       │   ├── HomePage.js
+│       │   ├── CartPage.js
+│       │   ├── ProductPage.js
+│       │   └── OrderPage.js
+│       │
+│       ├── services/           → Camada de serviços
+│       │   ├── api.js          → API REST / Mock
+│       │   └── pwa.js          → PWA Service
+│       │
+│       ├── store/
+│       │   └── store.js        → State Management (Observer)
+│       │
+│       ├── router/
+│       │   └── router.js       → SPA Router (hash-based)
+│       │
+│       ├── utils/
+│       │   ├── helpers.js      → DOM, debounce, storage...
+│       │   └── formatters.js   → Currency, date, text...
+│       │
+│       └── data/
+│           └── mockData.js     → Dados mock (produtos, banners...)
+│
+├── index.html
+├── manifest.webmanifest
+├── vite.config.js
+└── package.json
 ```
 
 ---
 
-## 🌐 URLs / Rotas
+## ⚡ Início Rápido
 
-| Página        | Arquivo           | Seções (âncoras)                                            |
-|---------------|-------------------|-------------------------------------------------------------|
-| Home          | `index.html`      | `#hero`, `#stats`, `#servicos`, `#gamer`, `#automacao`, `#sobre`, `#depoimentos`, `#cta` |
-| Contato       | `contato.html`    | Formulário, FAQ, mapa                                       |
+### Pré-requisitos
+- **Node.js** ≥ 18
+- **npm** ≥ 9
 
----
+### Instalação e execução
 
-## 🗄️ Tabela de Dados
+```bash
+# Clona o repositório (ou acesse a pasta)
+cd frontend
 
-**Tabela:** `contatos`
+# Instala dependências
+npm install
 
-| Campo     | Tipo   | Descrição                      |
-|-----------|--------|--------------------------------|
-| id        | text   | UUID automático                |
-| nome      | text   | Nome do cliente                |
-| email     | text   | E-mail do cliente              |
-| telefone  | text   | Telefone/WhatsApp              |
-| servico   | text   | Tipo de serviço selecionado    |
-| mensagem  | text   | Mensagem enviada               |
-| data      | text   | Data/hora do envio (ISO)       |
+# Inicia o servidor de desenvolvimento
+npm run dev
+```
 
-API: `POST tables/contatos`
+O app estará disponível em: **http://localhost:3000**
 
----
+### Build de produção
 
-## 🎨 Paleta de Cores Oficial
-
-| Nome             | Hex       | RGB           |
-|------------------|-----------|---------------|
-| Preto Absoluto   | `#000000` | R0 G0 B0      |
-| Azul Cósmico     | `#0037FF` | R0 G55 B255   |
-| Branco Nebuloso  | `#F5F5F5` | R245 G245 B245|
+```bash
+npm run build
+npm run preview
+```
 
 ---
 
-## ✅ Dados Reais Configurados
+## 🎨 Design System
 
-| Campo            | Valor                                                                 |
-|------------------|-----------------------------------------------------------------------|
-| WhatsApp/Telefone| (54) 3281-4464 — `wa.me/555432814464`                                 |
-| Endereço         | Saint Germain – Av. 15 de Novembro, 1540, Sala 110, Centro, Nova Petrópolis – RS, 95150-000 |
-| Facebook         | facebook.com/jcinformatica.br                                         |
-| Instagram        | instagram.com/jcinformaticanp                                         |
-| E-mail           | contato@jcinformatica.net.br                                          |
-| Horários         | Seg–Sex: 9h–12h / 13h20–18h30 · Sáb: 8h30–12h / 13h30–16h · Dom: Fechado |
+### Paleta de Cores
+
+| Token | Valor | Uso |
+|---|---|---|
+| `--color-primary` | `#E53935` | CTAs, brand |
+| `--color-secondary` | `#FFC107` | Highlights, badges |
+| `--color-bg` | `#111111` | Background principal |
+| `--color-surface` | `#1A1A1A` | Cards, modais |
+| `--color-surface-light` | `#252525` | Inputs, sub-surfaces |
+| `--color-border` | `#303030` | Bordas |
+| `--color-text-primary` | `#FFFFFF` | Texto principal |
+| `--color-text-secondary` | `#B5B5B5` | Texto secundário |
+| `--color-success` | `#43A047` | Status de sucesso |
+
+### Tipografia
+- **Poppins** — Títulos, labels, botões
+- **Inter** — Corpo de texto
+
+### Border Radius
+`4px • 8px • 12px • 18px • 24px • 32px • 9999px`
 
 ---
 
-## 🚀 Próximas Etapas
+## 📱 Funcionalidades
 
-- [ ] Adicionar fotos reais da loja e da equipe
-- [ ] Atualizar iframe do Google Maps com o Place ID exato da loja no Google Business
-- [ ] Criar página de serviços detalhada (`servicos.html`)
-- [ ] Adicionar galeria de antes/depois de equipamentos
-- [ ] Implementar chat online (Tawk.to ou similar)
-- [ ] Adicionar Google Analytics / Meta Pixel
-- [ ] Criar blog/dicas de informática
+### Home Page
+- ✅ Header com logo, endereço e tempo estimado
+- ✅ Banner carrossel deslizante (swipe + autoplay)
+- ✅ Navegação por categorias (scroll horizontal)
+- ✅ Seção de promoções
+- ✅ Mais Vendidas (scroll horizontal)
+- ✅ Recomendadas (grid 2 colunas)
+- ✅ Complete seu pedido (upsell)
+- ✅ Carrinho flutuante
+- ✅ Bottom Navigation
+
+### Produto
+- ✅ Imagem hero
+- ✅ Seleção de tamanho (P, M, G)
+- ✅ Controle de quantidade
+- ✅ Ingredientes como chips
+- ✅ Rating e avaliações
+- ✅ Add to cart
+
+### Carrinho
+- ✅ Lista de itens com controles
+- ✅ Resumo do pedido
+- ✅ Campo de observações
+- ✅ Campo de cupom
+- ✅ Botão de checkout
+- ✅ Estado vazio com CTA
+
+### Pedidos
+- ✅ Histórico de pedidos
+- ✅ Status dos pedidos
+- ✅ Estado vazio com onboarding
+
+### PWA
+- ✅ Web App Manifest
+- ✅ Service Worker (cache estratégico)
+- ✅ Prompt de instalação customizado
+- ✅ Detecção offline
+- ✅ Notificação de atualização
+
+### Animações
+- ✅ Fade, Slide, Scale keyframes
+- ✅ Skeleton loading (shimmer)
+- ✅ Ripple effect em botões
+- ✅ Hover effects (lift, scale, glow)
+- ✅ Transições de página
 
 ---
 
-## 🌐 Publicar
+## 🏗 Arquitetura
 
-Para colocar o site no ar: acesse a aba **Publish** e clique em **Publish**.
+### State Management
+Pattern Observer simples sem dependências externas:
+```javascript
+store.subscribe('cart', (newCart) => { ... });
+store.dispatch('ADD_TO_CART', product);
+```
+
+### Roteamento
+SPA Router baseado em hash (`#home`, `#cart`, `#product`, `#orders`):
+```javascript
+navigate('#cart');
+navigateToProduct('p001');
+```
+
+### Componentização
+Função factory que retorna `{ build, destroy }`:
+```javascript
+const card = ProductCard(product);
+const el = card.build(); // retorna HTMLElement
+container.appendChild(el);
+```
+
+### API Layer
+Pronto para integração com backend real via variável de ambiente:
+```env
+VITE_API_URL=https://api.pizzaflow.com.br
+```
+
+---
+
+## 🔌 Integração com Backend
+
+O arquivo `src/js/services/api.js` já está preparado:
+
+1. Defina `VITE_API_URL` no `.env`
+2. A flag `USE_MOCK` se torna `false` automaticamente
+3. Todas as chamadas são redirecionadas para a API real
+
+Endpoints esperados:
+```
+GET  /api/products
+GET  /api/products/:id
+GET  /api/products?category=pizza-classica
+GET  /api/products/search?q=margherita
+GET  /api/categories
+GET  /api/banners
+GET  /api/promotions
+POST /api/orders
+GET  /api/orders
+```
+
+---
+
+## 📊 Performance
+
+- **Code Splitting**: páginas carregadas sob demanda (dynamic import)
+- **Lazy Images**: imagens carregadas conforme aparecem na viewport
+- **CSS Variables**: sistema de design com variáveis nativas
+- **Service Worker**: assets em cache, funciona offline
+- **No-framework**: bundle mínimo, zero overhead de framework
+
+---
+
+## 🧪 Desenvolvimento
+
+### Variáveis de Ambiente
+
+Crie um arquivo `.env` na raiz:
+```env
+VITE_API_URL=               # URL da API (vazio = usa mock)
+VITE_APP_NAME=PizzaFlow
+```
+
+### Scripts disponíveis
+
+```bash
+npm run dev      # Servidor de desenvolvimento (localhost:3000)
+npm run build    # Build de produção em /dist
+npm run preview  # Preview do build de produção
+```
+
+---
+
+## 🗺 Roadmap (SaaS)
+
+### Fase 2 — Multi-tenant
+- [ ] Autenticação (JWT)
+- [ ] Dashboard da pizzaria
+- [ ] Gestão de cardápio
+- [ ] Gestão de pedidos em tempo real
+
+### Fase 3 — Avançado
+- [ ] Tracking de entrega em tempo real
+- [ ] Sistema de pagamento (Stripe/Pix)
+- [ ] Notificações push
+- [ ] Analytics e relatórios
+- [ ] App nativo (Capacitor.js)
+
+---
+
+## 📄 Licença
+
+MIT © 2026 PizzaFlow
+
+---
+
+<p align="center">
+  Feito com ❤️ e muito 🍕
+</p>

@@ -1,0 +1,24 @@
+{
+  "name": "pizzaflow",
+  "version": "1.0.0",
+  "description": "PizzaFlow — Sistema SaaS de Delivery de Pizza",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  },
+  "keywords": [
+    "pizza",
+    "delivery",
+    "saas",
+    "pwa",
+    "vite"
+  ],
+  "author": "PizzaFlow",
+  "license": "MIT"
+}
