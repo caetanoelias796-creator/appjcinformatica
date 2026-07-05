@@ -25,8 +25,8 @@ const API_BASE = import.meta.env.VITE_API_URL || '';
 /** Simular latência de rede em modo development */
 const MOCK_DELAY = 300; // ms
 
-/** Flag para usar dados mock ou API real */
-const USE_MOCK = false;
+/** Flag para usar dados mock ou API real (se VITE_API_URL estiver definida) */
+const USE_MOCK = !import.meta.env.VITE_API_URL;
 
 /* ==========================================================================
    UTILITÁRIO INTERNO
