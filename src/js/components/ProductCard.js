@@ -5,7 +5,7 @@
 
 import { store, isInCart, getCartQuantity } from '@store/store.js';
 import { formatCurrency } from '@utils/formatters.js';
-import { navigateToProduct } from '@router/router.js';
+import { openProductModal } from '@components/product/ProductModal.js';
 import { toastCart } from '@components/Toast.js';
 import { addRipple } from '@utils/helpers.js';
 
@@ -199,9 +199,9 @@ export function ProductCard(product, options = {}) {
           render();
           break;
         default:
-          // Clique no card → detalhe do produto
+          // Clique no card → abre o modal de customização/detalhe
           if (!e.target.closest('.qty-control, .product-card-fav')) {
-            navigateToProduct(product.id);
+            openProductModal(product.id);
           }
       }
     });
