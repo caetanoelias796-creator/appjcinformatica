@@ -4,9 +4,10 @@
  * Aparece quando há itens no carrinho.
  */
 
-import { store, onCartChange } from '@store/store.js';
 import { navigate } from '@router/router.js';
 import { formatCurrency } from '@utils/formatters.js';
+import { EventBus } from '@/core/EventBus.js';
+import { CartStore } from '@/core/CartStore.js';
 
 /* ==========================================================================
    COMPONENTE
@@ -18,12 +19,19 @@ import { formatCurrency } from '@utils/formatters.js';
  */
 export function mountFloatingCart(container) {
   // Renderiza estado inicial
-  const { cart } = store.getState();
-  render(container, cart);
+  render(container, {
+    items: CartStore.getItems(),
+    count: CartStore.getItemCount(),
+    total: CartStore.getTotal()
+  });
 
-  // Assina mudanças do carrinho
-  const unsubscribe = onCartChange((newCart) => {
-    render(container, newCart);
+  // Assina mudanças do carrinho via EventBus
+  const unsubscribe = EventBus.subscribe('cart:update', (items) => {
+    render(container, {
+      items,
+      count: CartStore.getItemCount(),
+      total: CartStore.getTotal()
+    });
   });
 
   // Evento de navegação

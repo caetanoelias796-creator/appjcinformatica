@@ -1,9 +1,6 @@
-/**
- * PizzaFlow — Crust (Borda) Selector Component
- * Seleção da borda recheada da pizza.
- */
-
 import { formatCurrency } from '@utils/formatters.js';
+import { EventBus } from '@/core/EventBus.js';
+import { PizzaRules } from '@/core/PizzaRules.js';
 
 /**
  * Lista de bordas fallback caso a API/mockData não responda
@@ -21,17 +18,24 @@ const DEFAULT_BORDERS = {
  * @param {object} options
  * @param {object} [options.bordersList] - Objeto contendo as bordas disponíveis
  * @param {Function} options.onChange - Callback executado ao alterar a borda
- * @returns {{ el: HTMLElement, update: Function }}
+ * @returns {{ el: HTMLElement, destroy: Function }}
  */
 export function CrustSelector({ bordersList = DEFAULT_BORDERS, onChange }) {
   let element = null;
   let currentCrustId = null;
+  let unsubscribe = null;
 
   /* ── BUILD ─────────────────────────────────────────────── */
   function build() {
     element = document.createElement('section');
     element.className = 'product-modal-section';
     element.id = 'product-modal-crust-section';
+
+    // Escuta evento para atualizar automaticamente
+    unsubscribe = EventBus.subscribe('product:updated', ({ config }) => {
+      update(config);
+    });
+
     return element;
   }
 
@@ -44,12 +48,9 @@ export function CrustSelector({ bordersList = DEFAULT_BORDERS, onChange }) {
 
     currentCrustId = crust?.id || 'sem-borda';
 
-    const isSweet = product.category === 'sobremesas';
-    
-    // Filtra bordas compatíveis (doce vs salgada)
+    // Filtra bordas compatíveis utilizando a validação de PizzaRules
     const list = bordersList || DEFAULT_BORDERS;
-    const compatibleBorders = Object.entries(list).map(([id, b]) => ({ id, ...b }))
-      .filter(b => b.category === 'ambas' || (isSweet ? b.category === 'doces' : b.category === 'salgadas'));
+    const compatibleBorders = PizzaRules.allowedCrusts(product, list);
 
     element.innerHTML = `
       <div class="product-modal-section-title-wrapper">
@@ -105,5 +106,10 @@ export function CrustSelector({ bordersList = DEFAULT_BORDERS, onChange }) {
     });
   }
 
-  return { build, update };
+  return {
+    build,
+    destroy() {
+      if (unsubscribe) unsubscribe();
+    }
+  };
 }

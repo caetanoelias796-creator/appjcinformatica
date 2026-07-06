@@ -1,9 +1,6 @@
-/**
- * PizzaFlow — Flavor Selector Component
- * Seleção de sabores da pizza com suporte a meio-a-meio e múltiplos sabores.
- */
-
 import { formatCurrency } from '@utils/formatters.js';
+import { EventBus } from '@/core/EventBus.js';
+import { PizzaRules } from '@/core/PizzaRules.js';
 
 /**
  * Cria o seletor de sabores
@@ -11,18 +8,25 @@ import { formatCurrency } from '@utils/formatters.js';
  * @param {object[]} options.allProducts - Lista completa de produtos
  * @param {Function} options.onAdd - Callback para adicionar sabor
  * @param {Function} options.onRemove - Callback para remover sabor
- * @returns {{ el: HTMLElement, update: Function }}
+ * @returns {{ el: HTMLElement, destroy: Function }}
  */
 export function FlavorSelector({ allProducts, onAdd, onRemove }) {
   let element = null;
   let searchTerm = '';
   let cachedState = null;
+  let unsubscribe = null;
 
   /* ── BUILD ─────────────────────────────────────────────── */
   function build() {
     element = document.createElement('section');
     element.className = 'product-modal-section';
     element.id = 'product-modal-flavors-section';
+
+    // Escuta evento para atualizar automaticamente
+    unsubscribe = EventBus.subscribe('product:updated', ({ config }) => {
+      update(config);
+    });
+
     return element;
   }
 
@@ -34,14 +38,8 @@ export function FlavorSelector({ allProducts, onAdd, onRemove }) {
     const { product, size, flavors } = state;
     if (!product || !size) return;
 
-    // 1. Determina limite de sabores com base no tamanho
-    const sizeId = size.id;
-    let maxFlavors = 1;
-    if (sizeId === 'broto') maxFlavors = 1;
-    else if (sizeId === 'media') maxFlavors = 2;
-    else if (sizeId === 'grande') maxFlavors = 2;
-    else if (sizeId === 'trem' || sizeId === 'gigante') maxFlavors = 4;
-
+    // 1. Determina limite de sabores com base no tamanho usando PizzaRules
+    const maxFlavors = PizzaRules.maxFlavors(size);
     const currentFlavorsCount = flavors.length;
 
     // 2. Filtra os sabores opcionais elegíveis (doce com doce, salgada com salgada)
@@ -88,11 +86,11 @@ export function FlavorSelector({ allProducts, onAdd, onRemove }) {
       <div class="flavor-list-container" role="group" aria-label="Sabores da pizza">
         ${filteredFlavors.map(f => {
           const isSelected = flavors.some(selected => selected.id === f.id);
-          const sizeObj = f.sizes?.find(s => s.id === sizeId);
+          const sizeObj = f.sizes?.find(s => s.id === size.id);
           const priceStr = sizeObj ? formatCurrency(sizeObj.price) : 'N/D';
           
           // Se atingiu o limite de sabores e este item NÃO está selecionado, ele fica bloqueado
-          const isBlocked = !isSelected && currentFlavorsCount >= maxFlavors;
+          const isBlocked = !isSelected && !PizzaRules.canAddFlavor(size, currentFlavorsCount);
 
           return `
             <div 
@@ -172,5 +170,10 @@ export function FlavorSelector({ allProducts, onAdd, onRemove }) {
     });
   }
 
-  return { build, update };
+  return {
+    build,
+    destroy() {
+      if (unsubscribe) unsubscribe();
+    }
+  };
 }

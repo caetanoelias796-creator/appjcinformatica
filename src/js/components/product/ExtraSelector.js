@@ -1,9 +1,6 @@
-/**
- * PizzaFlow — Extra Selector Component
- * Seleção de ingredientes extras/adicionais para a pizza.
- */
-
 import { formatCurrency } from '@utils/formatters.js';
+import { EventBus } from '@/core/EventBus.js';
+import { PizzaRules } from '@/core/PizzaRules.js';
 
 const EXTRA_INGREDIENTS = [
   { id: 'bacon', name: 'Bacon', price: 4.50 },
@@ -20,17 +17,24 @@ const EXTRA_INGREDIENTS = [
  * @param {object} options
  * @param {Function} options.onAdd - Callback para adicionar extra
  * @param {Function} options.onRemove - Callback para remover extra
- * @returns {{ el: HTMLElement, update: Function }}
+ * @returns {{ el: HTMLElement, destroy: Function }}
  */
 export function ExtraSelector({ onAdd, onRemove }) {
   let element = null;
   let currentExtras = [];
+  let unsubscribe = null;
 
   /* ── BUILD ─────────────────────────────────────────────── */
   function build() {
     element = document.createElement('section');
     element.className = 'product-modal-section';
     element.id = 'product-modal-extras-section';
+
+    // Escuta evento para atualizar automaticamente
+    unsubscribe = EventBus.subscribe('product:updated', ({ config }) => {
+      update(config);
+    });
+
     return element;
   }
 
@@ -107,5 +111,10 @@ export function ExtraSelector({ onAdd, onRemove }) {
     });
   }
 
-  return { build, update };
+  return {
+    build,
+    destroy() {
+      if (unsubscribe) unsubscribe();
+    }
+  };
 }

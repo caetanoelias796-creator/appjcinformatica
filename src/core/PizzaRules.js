@@ -18,6 +18,55 @@ export const PizzaRules = {
   },
 
   /**
+   * Retorna o limite máximo de sabores (apelido de getMaxFlavors aceitando objeto ou string)
+   * @param {object|string} size - Objeto de tamanho ou string ID do tamanho
+   * @returns {number}
+   */
+  maxFlavors(size) {
+    const sizeId = size && typeof size === 'object' ? size.id : size;
+    return this.getMaxFlavors(sizeId);
+  },
+
+  /**
+   * Verifica se é possível adicionar mais um sabor
+   * @param {object|string} size 
+   * @param {number} currentFlavorsCount 
+   * @returns {boolean}
+   */
+  canAddFlavor(size, currentFlavorsCount) {
+    return currentFlavorsCount < this.maxFlavors(size);
+  },
+
+  /**
+   * Retorna as bordas recheadas permitidas para a categoria ou tamanho
+   * @param {string|object} categoryOrSize - Categoria do produto ou objeto de tamanho
+   * @param {object} bordersList - Objeto contendo as bordas da base de dados
+   * @returns {object[]} Lista de bordas compatíveis
+   */
+  allowedCrusts(categoryOrSize, bordersList) {
+    if (!bordersList) return [];
+    
+    // Resolve categoria (se for objeto do produto base ou do tamanho)
+    const category = categoryOrSize && typeof categoryOrSize === 'object' 
+      ? (categoryOrSize.category || '') 
+      : String(categoryOrSize || '');
+
+    const isSweet = category === 'sobremesas' || category.includes('doce');
+    
+    return Object.entries(bordersList).map(([id, b]) => ({ id, ...b }))
+      .filter(b => b.category === 'ambas' || (isSweet ? b.category === 'doces' : b.category === 'salgadas'));
+  },
+
+  /**
+   * Retorna o limite máximo de ingredientes extras permitidos
+   * @param {object|string} size 
+   * @returns {number}
+   */
+  maxExtras(size) {
+    return 99; // Sem limite prático para pizzas
+  },
+
+  /**
    * Verifica se uma borda recheada é compatível com a categoria do produto (salgada vs doce)
    * @param {string} productCategory - Categoria da pizza (pizza-classica, pizza-especial, sobremesas)
    * @param {object} crust - Objeto de borda recheada

@@ -3,10 +3,16 @@
  * Modal principal de customização e compra de pizzas e outros produtos.
  */
 
-import { productBuilderStore } from '@store/ProductBuilderStore.js';
 import { store } from '@store/store.js';
 import { fetchBorders, fetchProducts } from '@services/api.js';
 import { toastCart } from '@components/Toast.js';
+
+// Core imports (RFC-001)
+import { EventBus } from '@/core/EventBus.js';
+import { ProductBuilder } from '@/core/ProductBuilder.js';
+import { PizzaRules } from '@/core/PizzaRules.js';
+import { PriceEngine } from '@/core/PriceEngine.js';
+import { CartStore } from '@/core/CartStore.js';
 
 import { PizzaPreview } from './PizzaPreview.js';
 import { SizeSelector } from './SizeSelector.js';
@@ -25,7 +31,7 @@ import './productModal.css';
 let _isOpen = false;
 let _allProducts = [];
 let _bordersList = {};
-let _unsubscribeStore = null;
+let _builder = null;
 
 // Sub-componentes
 let _preview = null;
@@ -76,36 +82,72 @@ export async function openProductModal(productId) {
 
     const hasSizes = product.sizes && product.sizes.length > 0;
 
-    // Inicializa a Builder Store
-    productBuilderStore.init(product, _allProducts);
+    // Inicializa o ProductBuilder local
+    _builder = new ProductBuilder(product);
+    
+    const defaultSize = product.sizes?.[1] || product.sizes?.[0] || null;
+    if (defaultSize) {
+      _builder.setSize(defaultSize);
+    }
 
     // Inicializa sub-componentes
     _preview = PizzaPreview();
     
     if (hasSizes) {
       _sizeSel = SizeSelector({
-        onChange: (size) => productBuilderStore.setSize(size)
+        onChange: (size) => {
+          _builder.setSize(size);
+          // Validação usando PizzaRules (limita sabores ao tamanho se menor)
+          const max = PizzaRules.maxFlavors(size);
+          const currentFlavors = _builder.build().flavors;
+          if (currentFlavors.length > max) {
+            _builder.setFlavors(currentFlavors.slice(0, max));
+          }
+          triggerUpdate();
+        }
       });
     }
 
     if (isPizza) {
       _flavorSel = FlavorSelector({
         allProducts: _allProducts,
-        onAdd: (flavor) => productBuilderStore.addFlavor(flavor),
-        onRemove: (flavorId) => productBuilderStore.removeFlavor(flavorId)
+        onAdd: (flavor) => {
+          const currentFlavors = _builder.build().flavors;
+          const currentSize = _builder.build().size;
+          if (PizzaRules.canAddFlavor(currentSize, currentFlavors.length)) {
+            _builder.addFlavor(flavor);
+            triggerUpdate();
+          }
+        },
+        onRemove: (flavorId) => {
+          _builder.removeFlavor(flavorId);
+          triggerUpdate();
+        }
       });
       _crustSel = CrustSelector({
         bordersList: _bordersList,
-        onChange: (crust) => productBuilderStore.setCrust(crust)
+        onChange: (crust) => {
+          _builder.setCrust(crust);
+          triggerUpdate();
+        }
       });
       _extraSel = ExtraSelector({
-        onAdd: (extra) => productBuilderStore.addExtra(extra),
-        onRemove: (extraId) => productBuilderStore.removeExtra(extraId)
+        onAdd: (extra) => {
+          _builder.addExtra(extra);
+          triggerUpdate();
+        },
+        onRemove: (extraId) => {
+          _builder.removeExtra(extraId);
+          triggerUpdate();
+        }
       });
     }
 
     _qtySel = QuantitySelector({
-      onChange: (qty) => productBuilderStore.setQuantity(qty)
+      onChange: (qty) => {
+        _builder.setQuantity(qty);
+        triggerUpdate();
+      }
     });
     _summary = PriceSummary();
 
@@ -201,21 +243,8 @@ export async function openProductModal(productId) {
     container.querySelector('#quantity-selector-mount').appendChild(_qtySel.build());
     container.querySelector('#price-summary-mount').appendChild(_summary.build());
 
-    // Se inscreve na Builder Store para atualizar a tela em tempo real
-    _unsubscribeStore = productBuilderStore.subscribe((state) => {
-      _preview.update(state);
-      if (hasSizes) _sizeSel.update(state);
-      if (isPizza) {
-        _flavorSel.update(state);
-        _crustSel.update(state);
-        _extraSel.update(state);
-      }
-      _qtySel.update(state);
-      _summary.update(state);
-    });
-
     // Dispara atualização inicial
-    productBuilderStore.updatePrice();
+    triggerUpdate();
 
     // Eventos
     setupModalEvents(container);
@@ -269,13 +298,20 @@ function cleanup() {
     container.setAttribute('aria-hidden', 'true');
   }
 
-  // Cancela inscrição na store
-  if (_unsubscribeStore) {
-    _unsubscribeStore();
-    _unsubscribeStore = null;
-  }
+  // Destrói os sub-componentes (limpando suas inscrições de eventos)
+  _preview?.destroy?.();
+  _sizeSel?.destroy?.();
+  _flavorSel?.destroy?.();
+  _crustSel?.destroy?.();
+  _extraSel?.destroy?.();
+  _qtySel?.destroy?.();
+  _summary?.destroy?.();
+
+  // Publica evento de fechamento
+  EventBus.publish('modal:close');
 
   _isOpen = false;
+  _builder = null;
   document.body.style.overflow = '';
 }
 
@@ -297,9 +333,10 @@ function setupModalEvents(container) {
     if (e.target === backdrop) closeProductModal();
   });
 
-  // Atualiza observação na store
+  // Atualiza observação utilizando o builder
   noteArea?.addEventListener('input', (e) => {
-    productBuilderStore.setNote(e.target.value);
+    _builder.setObservation(e.target.value);
+    triggerUpdate();
   });
 
   // Salvar/Submit
@@ -345,47 +382,44 @@ function setupModalEvents(container) {
   document.addEventListener('keydown', handleKeyDown);
 }
 
+function triggerUpdate() {
+  if (!_builder) return;
+  const config = _builder.build();
+  const pricing = PriceEngine.calculate(config);
+  EventBus.publish('product:updated', { config, pricing });
+}
+
 function handleSubmit() {
-  const state = productBuilderStore.getState();
-  const { product, size, flavors, crust, extras, quantity, note, total } = state;
+  if (!_builder) return;
+  const config = _builder.build();
 
-  // Monta a configuração do produto adicionado
-  const productConfiguration = {
-    id: product.id,
-    name: flavors.length > 1 ? `Pizza Meio a Meio (${flavors.map(f => f.name).join(' / ')})` : product.name,
-    price: total / quantity, // preço unitário com adicionais
-    image: product.image,
-    quantity,
-    size: size ? {
-      id: size.id,
-      label: size.label,
-      price: size.price
-    } : null,
-    crust: crust ? {
-      id: crust.id,
-      name: crust.name,
-      price: crust.price
-    } : null,
-    extras: extras.map(e => ({
-      id: e.id,
-      name: e.name,
-      price: e.price
-    })),
-    note,
-    flavors: flavors.map(f => ({
-      id: f.id,
-      name: f.name
-    }))
-  };
+  // Executa validação de regras de negócio antes de adicionar ao carrinho
+  const validation = PizzaRules.validate(config);
+  if (!validation.isValid) {
+    alert(validation.error);
+    return;
+  }
 
-  // 1. Emite o evento customizado conforme especificação
-  window.dispatchEvent(new CustomEvent('addToCart', { detail: productConfiguration }));
+  // Adiciona ao CartStore (Core) que emite os eventos no EventBus automaticamente
+  CartStore.add(config);
 
-  // 2. Integra com o carrinho real do PizzaFlow para atualizar a UI do app
-  store.dispatch('ADD_TO_CART', productConfiguration);
+  // Mantemos o dispatch na store legada para que os componentes não migrados também reajam
+  const pricing = PriceEngine.calculate(config);
+  store.dispatch('ADD_TO_CART', {
+    id: config.id,
+    name: config.name,
+    price: pricing.total / config.quantity,
+    image: config.image,
+    quantity: config.quantity,
+    size: config.size,
+    crust: config.crust,
+    extras: config.extras,
+    note: config.note,
+    flavors: config.flavors
+  });
 
   // Exibe feedback visual
-  toastCart(productConfiguration.name);
+  toastCart(config.name);
 
   // Fecha o modal
   closeProductModal();

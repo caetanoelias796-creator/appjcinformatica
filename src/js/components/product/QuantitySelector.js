@@ -1,23 +1,27 @@
-/**
- * PizzaFlow — Quantity Selector Component
- * Controle de quantidade do produto a ser adicionado ao carrinho.
- */
+import { EventBus } from '@/core/EventBus.js';
 
 /**
  * Cria o seletor de quantidade
  * @param {object} options
  * @param {Function} options.onChange - Callback executado ao alterar a quantidade
- * @returns {{ el: HTMLElement, update: Function }}
+ * @returns {{ el: HTMLElement, destroy: Function }}
  */
 export function QuantitySelector({ onChange }) {
   let element = null;
   let currentQty = 1;
+  let unsubscribe = null;
 
   /* ── BUILD ─────────────────────────────────────────────── */
   function build() {
     element = document.createElement('section');
     element.className = 'product-modal-section quantity-section';
     element.id = 'product-modal-quantity-section';
+
+    // Escuta evento para atualizar automaticamente
+    unsubscribe = EventBus.subscribe('product:updated', ({ config }) => {
+      update(config);
+    });
+
     return element;
   }
 
@@ -68,5 +72,10 @@ export function QuantitySelector({ onChange }) {
     });
   }
 
-  return { build, update };
+  return {
+    build,
+    destroy() {
+      if (unsubscribe) unsubscribe();
+    }
+  };
 }

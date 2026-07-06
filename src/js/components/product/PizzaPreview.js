@@ -1,20 +1,24 @@
-/**
- * PizzaFlow — Pizza Preview Component
- * Visualização dinâmica da pizza montada (sabores divididos, tamanho e extras).
- */
+import { EventBus } from '@/core/EventBus.js';
 
 /**
  * Cria a prévia da pizza
- * @returns {{ el: HTMLElement, update: Function }}
+ * @returns {{ el: HTMLElement, destroy: Function }}
  */
 export function PizzaPreview() {
   let element = null;
+  let unsubscribe = null;
 
   /* ── BUILD ─────────────────────────────────────────────── */
   function build() {
     element = document.createElement('div');
     element.className = 'pizza-preview-wrapper';
     element.setAttribute('aria-hidden', 'true');
+    
+    // Escuta evento para atualizar automaticamente
+    unsubscribe = EventBus.subscribe('product:updated', ({ config }) => {
+      update(config);
+    });
+    
     return element;
   }
 
@@ -111,5 +115,10 @@ export function PizzaPreview() {
     `;
   }
 
-  return { build, update };
+  return {
+    build,
+    destroy() {
+      if (unsubscribe) unsubscribe();
+    }
+  };
 }

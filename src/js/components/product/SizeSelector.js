@@ -1,25 +1,28 @@
-/**
- * PizzaFlow — Size Selector Component
- * Seleção do tamanho da pizza (Broto, Média, Grande, Gigante).
- */
-
 import { formatCurrency } from '@utils/formatters.js';
+import { EventBus } from '@/core/EventBus.js';
 
 /**
  * Cria o seletor de tamanho
  * @param {object} options
  * @param {Function} options.onChange - Callback executado ao mudar o tamanho
- * @returns {{ el: HTMLElement, update: Function }}
+ * @returns {{ el: HTMLElement, destroy: Function }}
  */
 export function SizeSelector({ onChange }) {
   let element = null;
   let currentSizeId = null;
+  let unsubscribe = null;
 
   /* ── BUILD ─────────────────────────────────────────────── */
   function build() {
     element = document.createElement('section');
     element.className = 'product-modal-section';
     element.id = 'product-modal-size-section';
+
+    // Escuta evento para atualizar automaticamente
+    unsubscribe = EventBus.subscribe('product:updated', ({ config }) => {
+      update(config);
+    });
+
     return element;
   }
 
@@ -84,5 +87,10 @@ export function SizeSelector({ onChange }) {
     });
   }
 
-  return { build, update };
+  return {
+    build,
+    destroy() {
+      if (unsubscribe) unsubscribe();
+    }
+  };
 }

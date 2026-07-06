@@ -46,7 +46,17 @@ class CartStoreClass {
 
     // Publica eventos no EventBus
     EventBus.publish('cart:updated', this.getItems());
+    EventBus.publish('cart:update', this.getItems()); // Alias para RFC-001
     EventBus.publish('cart:added', cartItem);
+    EventBus.publish('cart:add', cartItem); // Alias para RFC-001
+  }
+
+  /**
+   * Alias de addItem para integração da RFC-001
+   * @param {object} config 
+   */
+  add(config) {
+    return this.addItem(config);
   }
 
   /**
@@ -60,6 +70,7 @@ class CartStoreClass {
     this.items = this.items.filter(item => item.cartItemId !== cartItemId);
     
     EventBus.publish('cart:updated', this.getItems());
+    EventBus.publish('cart:update', this.getItems());
     EventBus.publish('cart:removed', removedItem);
   }
 
@@ -81,6 +92,7 @@ class CartStoreClass {
       item.totalPrice = pricing.total;
       
       EventBus.publish('cart:updated', this.getItems());
+      EventBus.publish('cart:update', this.getItems());
     }
   }
 
@@ -90,6 +102,7 @@ class CartStoreClass {
   clear() {
     this.items = [];
     EventBus.publish('cart:updated', this.getItems());
+    EventBus.publish('cart:update', this.getItems());
     EventBus.publish('cart:cleared');
   }
 

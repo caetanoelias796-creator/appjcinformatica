@@ -4,8 +4,11 @@
  */
 
 export class ProductBuilder {
-  constructor() {
+  constructor(product) {
     this.reset();
+    if (product) {
+      this.setProduct(product);
+    }
   }
 
   /**
@@ -139,6 +142,15 @@ export class ProductBuilder {
   setNote(note) {
     this.note = note;
     return this;
+  }
+
+  /**
+   * Define observações do preparo (apelido/alias para setNote)
+   * @param {string} note 
+   * @returns {ProductBuilder}
+   */
+  setObservation(note) {
+    return this.setNote(note);
   }
 
   /**
