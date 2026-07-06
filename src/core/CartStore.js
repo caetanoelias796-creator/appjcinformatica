@@ -1,62 +1,38 @@
 /**
  * PizzaFlow — CartStore
- * Gerenciador de itens do carrinho. Armazena a lista de itens ativos e notifica alterações via EventBus.
+ * Centralizador e ponte de comunicação reativa do domínio do Carrinho (Cart).
+ * Implementa a interface pública e sincroniza operações com a entidade do domínio.
  */
 
-import { EventBus } from './EventBus.js';
-import { PriceEngine } from './PriceEngine.js';
+import { Cart } from '@/domain/cart/Cart.js';
 
 class CartStoreClass {
   constructor() {
-    this.items = [];
+    this.cartInstance = new Cart();
   }
 
   /**
    * Retorna os itens do carrinho
-   * @returns {object[]} Lista de itens no carrinho
+   * @returns {object[]}
    */
   getItems() {
-    return [...this.items];
+    return this.cartInstance.items();
   }
 
   /**
-   * Adiciona um item configurado pelo ProductBuilder ao carrinho
-   * @param {object} config - Objeto configurado do produto
+   * Adiciona um item configurado
+   * @param {object} config 
    */
   addItem(config) {
-    const pricing = PriceEngine.calculate(config);
-    const cartItemId = this.#generateUniqueKey(config);
-
-    const cartItem = {
-      ...config,
-      cartItemId,
-      unitPrice: pricing.total / config.quantity,
-      totalPrice: pricing.total
-    };
-
-    const existingIndex = this.items.findIndex(item => item.cartItemId === cartItemId);
-    
-    if (existingIndex >= 0) {
-      this.items[existingIndex].quantity += config.quantity;
-      const updatedPricing = PriceEngine.calculate(this.items[existingIndex]);
-      this.items[existingIndex].totalPrice = updatedPricing.total;
-    } else {
-      this.items.push(cartItem);
-    }
-
-    // Publica eventos no EventBus
-    EventBus.publish('cart:updated', this.getItems());
-    EventBus.publish('cart:update', this.getItems()); // Alias para RFC-001
-    EventBus.publish('cart:added', cartItem);
-    EventBus.publish('cart:add', cartItem); // Alias para RFC-001
+    this.cartInstance.add(config);
   }
 
   /**
-   * Alias de addItem para integração da RFC-001
+   * Alias de addItem para integração da RFC-001/RFC-003
    * @param {object} config 
    */
   add(config) {
-    return this.addItem(config);
+    this.cartInstance.add(config);
   }
 
   /**
@@ -64,14 +40,7 @@ class CartStoreClass {
    * @param {string} cartItemId 
    */
   removeItem(cartItemId) {
-    const removedItem = this.items.find(item => item.cartItemId === cartItemId);
-    if (!removedItem) return;
-
-    this.items = this.items.filter(item => item.cartItemId !== cartItemId);
-    
-    EventBus.publish('cart:updated', this.getItems());
-    EventBus.publish('cart:update', this.getItems());
-    EventBus.publish('cart:removed', removedItem);
+    this.cartInstance.remove(cartItemId);
   }
 
   /**
@@ -80,59 +49,54 @@ class CartStoreClass {
    * @param {number} quantity 
    */
   updateQuantity(cartItemId, quantity) {
-    if (quantity <= 0) {
-      this.removeItem(cartItemId);
-      return;
-    }
-
-    const item = this.items.find(i => i.cartItemId === cartItemId);
-    if (item) {
-      item.quantity = quantity;
-      const pricing = PriceEngine.calculate(item);
-      item.totalPrice = pricing.total;
-      
-      EventBus.publish('cart:updated', this.getItems());
-      EventBus.publish('cart:update', this.getItems());
-    }
+    this.cartInstance.update(cartItemId, quantity);
   }
 
   /**
    * Esvazia todo o carrinho
    */
   clear() {
-    this.items = [];
-    EventBus.publish('cart:updated', this.getItems());
-    EventBus.publish('cart:update', this.getItems());
-    EventBus.publish('cart:cleared');
+    this.cartInstance.clear();
   }
 
   /**
    * Retorna o preço total do carrinho
-   * @returns {number} Valor total acumulado
+   * @returns {number}
    */
   getTotal() {
-    return this.items.reduce((sum, item) => sum + item.totalPrice, 0);
+    return this.cartInstance.total();
   }
 
   /**
    * Retorna o número total de itens no carrinho
-   * @returns {number} Quantidade total de itens
+   * @returns {number}
    */
   getItemCount() {
-    return this.items.reduce((sum, item) => sum + item.quantity, 0);
+    return this.cartInstance.count();
   }
 
   /**
-   * Gera uma chave identificadora única baseada nas escolhas de personalização
-   * @param {object} config 
-   * @returns {string} Chave única
+   * Métodos auxiliares de domínio
    */
-  #generateUniqueKey(config) {
-    const sizeId = config.size?.id || 'default';
-    const crustId = config.crust?.id || 'sem-borda';
-    const flavorIds = config.flavors ? config.flavors.map(f => f.id).sort().join(',') : 'default';
-    const extraIds = config.extras ? config.extras.map(e => e.id).sort().join(',') : '';
-    return `${config.id}-${sizeId}-${crustId}-[${flavorIds}]-[${extraIds}]`;
+  subtotal() { return this.cartInstance.subtotal(); }
+  extras() { return this.cartInstance.extras(); }
+  discount() { return this.cartInstance.discount(); }
+  shipping() { return this.cartInstance.shipping(); }
+  total() { return this.cartInstance.total(); }
+  
+  getCoupon() { return this.cartInstance.getCouponDomain(); }
+  getShipping() { return this.cartInstance.getShippingDomain(); }
+
+  applyCoupon(code) {
+    return this.cartInstance.applyCoupon(code);
+  }
+
+  removeCoupon() {
+    this.cartInstance.removeCoupon();
+  }
+
+  setShippingMethod(method) {
+    this.cartInstance.setShippingMethod(method);
   }
 }
 
@@ -142,22 +106,6 @@ export const CartStore = new CartStoreClass();
    TESTES BÁSICOS DE USO
    ==========================================================================
    
-   // Ouvir alterações do carrinho
-   const unsub = EventBus.subscribe('cart:updated', (items) => {
-     console.log('Carrinho atualizado! Qtd itens:', items.length);
-   });
-
-   const configItem = {
-     id: 'mussarela',
-     name: 'Pizza Mussarela',
-     quantity: 1,
-     size: { id: 'media', price: 80 },
-     flavors: [{ id: 'mussarela', name: 'Pizza Mussarela' }]
-   };
-
-   CartStore.addItem(configItem); // Deve logar "Carrinho atualizado! Qtd itens: 1"
-   console.log('Total Carrinho:', CartStore.getTotal()); // Deve imprimir: 80
-   
-   CartStore.clear(); // Deve logar "Carrinho atualizado! Qtd itens: 0"
-   unsub();
+   console.log('Quantidade de itens:', CartStore.getItemCount()); // Deve mostrar itens persistidos
+   console.log('Total carrinho:', CartStore.getTotal());
    ========================================================================== */

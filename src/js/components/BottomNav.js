@@ -6,6 +6,7 @@
 import { store, onPageChange, onCartChange } from '@store/store.js';
 import { navigate } from '@router/router.js';
 import { addRipple } from '@utils/helpers.js';
+import { openCartDrawer } from '@components/cart/CartDrawer.js';
 
 /* ==========================================================================
    ABAS
@@ -113,7 +114,11 @@ function renderNav(container, activePage, cartCount) {
 function handleNavClick(e) {
   const item = e.target.closest('.bottom-nav-item');
   if (!item) return;
-  navigate(item.dataset.navRoute);
+  if (item.dataset.navId === 'cart') {
+    openCartDrawer();
+  } else {
+    navigate(item.dataset.navRoute);
+  }
 }
 
 /* ==========================================================================

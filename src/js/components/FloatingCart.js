@@ -4,10 +4,9 @@
  * Aparece quando há itens no carrinho.
  */
 
-import { navigate } from '@router/router.js';
 import { formatCurrency } from '@utils/formatters.js';
 import { EventBus } from '@/core/EventBus.js';
-import { CartStore } from '@/core/CartStore.js';
+import { openCartDrawer } from '@components/cart/CartDrawer.js';
 
 /* ==========================================================================
    COMPONENTE
@@ -18,28 +17,31 @@ import { CartStore } from '@/core/CartStore.js';
  * @param {HTMLElement} container
  */
 export function mountFloatingCart(container) {
-  // Renderiza estado inicial
+  // Renderiza estado inicial vazio
   render(container, {
-    items: CartStore.getItems(),
-    count: CartStore.getItemCount(),
-    total: CartStore.getTotal()
+    items: [],
+    count: 0,
+    total: 0
   });
 
   // Assina mudanças do carrinho via EventBus
-  const unsubscribe = EventBus.subscribe('cart:update', (items) => {
+  const unsubscribe = EventBus.subscribe('cart:update', (payload) => {
     render(container, {
-      items,
-      count: CartStore.getItemCount(),
-      total: CartStore.getTotal()
+      items: payload.items || [],
+      count: payload.count || 0,
+      total: payload.total || 0
     });
   });
 
-  // Evento de navegação
+  // Evento de clique para abrir o Drawer
   container.addEventListener('click', (e) => {
     if (e.target.closest('.floating-cart-btn')) {
-      navigate('#cart');
+      openCartDrawer();
     }
   });
+
+  // Solicita uma atualização imediata do carrinho
+  EventBus.publish('cart:request_update');
 
   return {
     destroy() {
