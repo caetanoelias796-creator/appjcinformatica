@@ -7386,3 +7386,90 @@ export function getProductsByIds(ids) {
 export function formatPrice(price) {
   return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
+
+export const flavors = [
+  {
+    id: "flavor-calabresa",
+    name: "Calabresa",
+    description: "Molho de tomate, mussarela, calabresa fatiada e cebola roxa.",
+    image: "🍕",
+    displayOrder: 1,
+    active: true,
+    companyId: "c51b18d2-4322-4bb3-be9d-f5e6b72a912e"
+  },
+  {
+    id: "flavor-mussarela",
+    name: "Mussarela",
+    description: "Molho de tomate, mussarela premium, rodelas de tomate e orégano.",
+    image: "🧀",
+    displayOrder: 2,
+    active: true,
+    companyId: "c51b18d2-4322-4bb3-be9d-f5e6b72a912e"
+  },
+  {
+    id: "flavor-frango-catupiry",
+    name: "Frango com Catupiry",
+    description: "Frango desfiado temperado, catupiry original e milho verde.",
+    image: "🍗",
+    displayOrder: 3,
+    active: true,
+    companyId: "c51b18d2-4322-4bb3-be9d-f5e6b72a912e"
+  },
+  {
+    id: "flavor-quatro-queijos",
+    name: "Quatro Queijos",
+    description: "Mussarela, provolone, parmesão e requeijão cremoso.",
+    image: "🧀",
+    displayOrder: 4,
+    active: true,
+    companyId: "c51b18d2-4322-4bb3-be9d-f5e6b72a912e"
+  },
+  {
+    id: "flavor-brigadeiro",
+    name: "Brigadeiro",
+    description: "Chocolate ao leite cremoso com granulado de chocolate.",
+    image: "🍫",
+    displayOrder: 5,
+    active: true,
+    companyId: "c51b18d2-4322-4bb3-be9d-f5e6b72a912e"
+  }
+];
+
+export const borders = [
+  { id: 'sem-borda', name: 'Sem Borda', price: 0.00, category: 'ambas' },
+  { id: 'catupiry', name: 'Borda de Catupiry', price: 5.00, category: 'salgadas' },
+  { id: 'cheddar', name: 'Borda de Cheddar', price: 5.00, category: 'salgadas' },
+  { id: 'quatro-queijos', name: 'Borda 4 Queijos', price: 5.00, category: 'salgadas' },
+  { id: 'calabresa', name: 'Borda de Calabresa', price: 5.00, category: 'salgadas' },
+  { id: 'doce-de-leite', name: 'Borda de Doce de Leite', price: 5.00, category: 'doces' },
+  { id: 'choco-branco', name: 'Borda de Chocolate Branco', price: 5.00, category: 'doces' },
+  { id: 'choco-preto', name: 'Borda de Chocolate Preto', price: 5.00, category: 'doces' },
+  { id: 'gergelim', name: 'Borda com Gergelim Branco', price: 5.00, category: 'ambas' }
+];
+
+export const extras = [
+  { id: 'extra-bacon', name: 'Bacon Extra', price: 6.00 },
+  { id: 'extra-queijo', name: 'Mussarela Extra', price: 6.00 },
+  { id: 'extra-catupiry', name: 'Catupiry Extra', price: 8.00 },
+  { id: 'extra-bacon-crisp', name: 'Bacon Crisp', price: 5.00 },
+  { id: 'extra-azeitona', name: 'Azeitona Preta', price: 3.00 },
+  { id: 'extra-ovo', name: 'Ovo Adicional', price: 3.00 }
+];
+
+export const mockBusinessHours = [
+  { dayOfWeek: 0, openTime: '18:00', closeTime: '23:30', active: true },
+  { dayOfWeek: 1, openTime: '18:00', closeTime: '23:30', active: true },
+  { dayOfWeek: 2, openTime: '18:00', closeTime: '23:30', active: true },
+  { dayOfWeek: 3, openTime: '18:00', closeTime: '23:30', active: true },
+  { dayOfWeek: 4, openTime: '18:00', closeTime: '23:30', active: true },
+  { dayOfWeek: 5, openTime: '18:00', closeTime: '01:00', active: true },
+  { dayOfWeek: 6, openTime: '18:00', closeTime: '01:00', active: true }
+];
+
+export const mockRecentOrders = [
+  { id: 'ORD-8742', customerName: 'Elias Caetano', type: 'DELIVERY', status: 'READY', total: 84.50, time: '22:38' },
+  { id: 'ORD-8741', customerName: 'Ana Julia', type: 'PICKUP', status: 'OVEN', total: 52.00, time: '22:45' },
+  { id: 'ORD-8740', customerName: 'Carlos Alberto', type: 'DELIVERY', status: 'PREPARING', total: 112.00, time: '22:30' },
+  { id: 'ORD-8739', customerName: 'Mariana Costa', type: 'DELIVERY', status: 'PENDING', total: 75.90, time: '22:15' },
+  { id: 'ORD-8738', customerName: 'Julio Cesar', type: 'PICKUP', status: 'DELIVERED', total: 42.00, time: '21:50' }
+];

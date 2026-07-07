@@ -2,6 +2,12 @@
  * PizzaFlow — Main Entry Point v2
  */
 
+// Import global styles (Vite will compile and inject these)
+import './css/design-system.css';
+import './css/animations.css';
+import './css/components.css';
+import './css/layout.css';
+
 // Serviços & Router
 import { initRouter }           from './js/router/router.js';
 import { registerServiceWorker, setupInstallPrompt, setupOfflineDetection } from './js/services/pwa.js';

@@ -11,13 +11,18 @@ import { qs }    from '@utils/helpers.js';
    ========================================================================== */
 
 const routes = {
-  '#home':     () => import('@pages/HomePage.js'),
-  '#catalog':  () => import('@pages/CatalogPage.js'),
-  '#cart':     () => import('@pages/CartPage.js'),
-  '#checkout': () => import('@pages/CheckoutPage.js'),
-  '#product':  () => import('@pages/ProductPage.js'),
-  '#orders':   () => import('@pages/OrderPage.js'),
-  '#profile':  () => import('@pages/OrderPage.js'),
+  '#home':             () => import('@pages/HomePage.js'),
+  '#catalog':          () => import('@pages/CatalogPage.js'),
+  '#cart':             () => import('@pages/CartPage.js'),
+  '#checkout':         () => import('@pages/CheckoutPage.js'),
+  '#product':          () => import('@pages/ProductPage.js'),
+  '#orders':           () => import('@pages/OrderPage.js'),
+  '#profile':          () => import('@pages/OrderPage.js'),
+  '#admin-products':        () => import('@pages/AdminProductsPage.js'),
+  '#admin-categories':      () => import('@pages/AdminCategoriesPage.js'),
+  '#admin-flavors':         () => import('@pages/AdminFlavorsPage.js'),
+  '#admin-product-builder': () => import('@pages/AdminProductBuilderPage.js'),
+  '#admin-dashboard':       () => import('@pages/AdminDashboardPage.js'),
 };
 
 const DEFAULT_ROUTE = '#home';

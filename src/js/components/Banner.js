@@ -82,7 +82,7 @@ export function BannerSlider(banners) {
         >
           <div class="banner-slide-content">
             <span class="banner-slide-tag">${banner.tag}</span>
-            <h2 class="banner-slide-title">${banner.title.replace(/\n/g, '<br>')}</h2>
+            <h2 class="banner-slide-title">${banner.title.replace(/\\n/g, '<br>').replace(/\n/g, '<br>')}</h2>
             <p class="banner-slide-subtitle">${banner.subtitle}</p>
             <button
               class="banner-slide-btn ripple-container"

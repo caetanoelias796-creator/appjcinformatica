@@ -1568,7 +1568,10 @@
 
 /* --------------------------------------------------------------------------
    17. PWA INSTALL PROMPT
-   -------------------------------------------------------------------------- */
+   .pwa-install-prompt[hidden] {
+  display: none !important;
+}
+
 .pwa-install-prompt {
   position: fixed;
   bottom: calc(var(--bottom-nav-height) + var(--space-4));
