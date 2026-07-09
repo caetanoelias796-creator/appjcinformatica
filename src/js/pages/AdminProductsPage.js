@@ -599,9 +599,12 @@ export default function AdminProductsPage() {
 
         <!-- Imagem URL (Com sugestões locais baseadas no tipo de item) -->
         <div class="input-group">
-          <label class="input-label" for="form-prod-image">URL da Imagem</label>
+          <label class="input-label" for="form-prod-image">URL da Imagem ou Upload</label>
           <input class="input" type="text" id="form-prod-image" value="${product && product.image ? escapeHtml(product.image) : ''}" placeholder="URL da imagem ou sugestão abaixo">
           <div id="form-image-suggestions" style="margin-top: 4px; display: flex; flex-wrap: wrap; gap: 6px;"></div>
+          <div style="margin-top: 8px;">
+            <input type="file" id="form-prod-image-file" accept="image/*" class="input" style="font-size: var(--text-xs); padding: var(--space-2); height: auto; cursor: pointer; width: 100%;">
+          </div>
         </div>
 
         <!-- Status Ativo -->
@@ -813,13 +816,17 @@ export default function AdminProductsPage() {
     const submitBtn = modalEl.querySelector('.dialog-footer button.btn-primary');
     submitBtn?.replaceWith(submitBtn.cloneNode(true)); // remove o listener padrão do Dialog.js
     
-    modalEl.querySelector('.dialog-footer button.btn-primary')?.addEventListener('click', async () => {
+    const saveBtn = modalEl.querySelector('.dialog-footer button.btn-primary');
+    saveBtn?.addEventListener('click', async () => {
       const name = modalEl.querySelector('#form-prod-name').value.trim();
       const categoryId = modalEl.querySelector('#form-prod-category').value;
       const type = modalEl.querySelector('#form-prod-type').value;
       const description = modalEl.querySelector('#form-prod-desc').value.trim();
       const image = modalEl.querySelector('#form-prod-image').value.trim();
       const active = modalEl.querySelector('#form-prod-active').checked;
+      
+      const imageFileEl = modalEl.querySelector('#form-prod-image-file');
+      const imageFile = imageFileEl?.files?.[0] || null;
 
       // Validações no frontend
       if (!name) {
@@ -838,12 +845,18 @@ export default function AdminProductsPage() {
         return;
       }
 
+      saveBtn.disabled = true;
+      const originalText = saveBtn.textContent;
+      saveBtn.textContent = 'Salvando e fazendo Upload...';
+      saveBtn.style.opacity = '0.7';
+
       const productPayload = {
         name,
         categoryId,
         type,
         description: description || null,
         image: image || null,
+        imageFile: imageFile, // Injeta o arquivo de upload para o Firebase Storage
         active,
         sizes: localSizes,
         companyId: 'c51b18d2-4322-4bb3-be9d-f5e6b72a912e' // Default tenant id para fins demonstrativos
@@ -863,6 +876,9 @@ export default function AdminProductsPage() {
         loadData();
       } catch (err) {
         toastError('Erro', err.message || 'Erro ao persistir dados do produto.');
+        saveBtn.disabled = false;
+        saveBtn.textContent = originalText;
+        saveBtn.style.opacity = '1';
       }
     });
   }

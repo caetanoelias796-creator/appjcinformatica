@@ -528,6 +528,12 @@ export default function AdminCategoriesPage() {
           </div>
         </div>
 
+        <!-- Upload de imagem para Firebase Storage -->
+        <div class="input-group">
+          <label class="input-label" for="form-cat-image-file">Ou fazer Upload de Foto</label>
+          <input type="file" id="form-cat-image-file" accept="image/*" class="input" style="font-size: var(--text-xs); padding: var(--space-2); height: auto; cursor: pointer; width: 100%;">
+        </div>
+
         <!-- Checkbox Ativo -->
         <div style="display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-1); margin-bottom: var(--space-2);">
           <input type="checkbox" id="form-cat-active" ${(!category || category.active !== false) ? 'checked' : ''} style="width: 18px; height: 18px; cursor: pointer;">
@@ -563,12 +569,16 @@ export default function AdminCategoriesPage() {
     const submitBtn = modalEl.querySelector('.dialog-footer button.btn-primary');
     submitBtn?.replaceWith(submitBtn.cloneNode(true)); // Limpa listeners
 
-    modalEl.querySelector('.dialog-footer button.btn-primary')?.addEventListener('click', async () => {
+    const saveBtn = modalEl.querySelector('.dialog-footer button.btn-primary');
+    saveBtn?.addEventListener('click', async () => {
       const name = modalEl.querySelector('#form-cat-name').value.trim();
       const description = modalEl.querySelector('#form-cat-desc').value.trim();
       const image = modalEl.querySelector('#form-cat-image').value.trim();
       const displayOrder = parseInt(modalEl.querySelector('#form-cat-order').value, 10) || 0;
       const active = modalEl.querySelector('#form-cat-active').checked;
+
+      const imageFileEl = modalEl.querySelector('#form-cat-image-file');
+      const imageFile = imageFileEl?.files?.[0] || null;
 
       // Validação frontend (3 a 60 caracteres)
       if (!name) {
@@ -587,10 +597,16 @@ export default function AdminCategoriesPage() {
         return;
       }
 
+      saveBtn.disabled = true;
+      const originalText = saveBtn.textContent;
+      saveBtn.textContent = 'Salvando e fazendo Upload...';
+      saveBtn.style.opacity = '0.7';
+
       const payload = {
         name,
         description: description || null,
         image: image || null,
+        imageFile: imageFile, // Injeta o arquivo para upload no Firebase Storage
         displayOrder,
         active,
         companyId: 'c51b18d2-4322-4bb3-be9d-f5e6b72a912e' // Default tenant id
@@ -609,7 +625,10 @@ export default function AdminCategoriesPage() {
         closeCurrentDialog();
         loadData();
       } catch (err) {
-        toastError('Erro', err.message || 'Erro ao salvar categoria.');
+        toastError('Erro', err.message || 'Erro ao persistir dados da categoria.');
+        saveBtn.disabled = false;
+        saveBtn.textContent = originalText;
+        saveBtn.style.opacity = '1';
       }
     });
   }
