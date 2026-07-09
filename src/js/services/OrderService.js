@@ -61,10 +61,12 @@ export const OrderService = {
     }
 
     try {
-      await setDoc(doc(db, 'orders', orderId), {
-        ...newOrder,
-        createdAt: new Date().toISOString()
-      });
+      // Sanitiza dados para remover campos undefined que o Firestore rejeita
+      const sanitizedOrder = JSON.parse(JSON.stringify(newOrder, (key, value) => {
+        return value === undefined ? null : value;
+      }));
+
+      await setDoc(doc(db, 'orders', orderId), sanitizedOrder);
       return newOrder;
     } catch (err) {
       console.error('[OrderService] Erro ao salvar pedido no Firestore:', err);
