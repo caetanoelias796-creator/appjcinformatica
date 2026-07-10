@@ -77,8 +77,13 @@ async function handleRoute() {
           <p class="cart-empty-desc mt-4" style="color: var(--color-text-secondary); font-size: var(--text-xs);">Verificando sessão...</p>
         </div>
       `;
-      const unsubscribe = AuthService.subscribe((user) => {
-        unsubscribe();
+      let unsubscribe;
+      unsubscribe = AuthService.subscribe((user) => {
+        if (unsubscribe) {
+          unsubscribe();
+        } else {
+          setTimeout(() => unsubscribe?.(), 0);
+        }
         handleRoute();
       });
       return;
