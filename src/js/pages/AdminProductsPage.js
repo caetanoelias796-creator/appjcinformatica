@@ -686,15 +686,42 @@ export default function AdminProductsPage() {
       let suggestions = [];
       if (type === 'PIZZA') {
         suggestions = [
-          { label: 'Calabresa', value: '/images/pizza_calabresa.png' },
-          { label: 'Margherita', value: '/images/pizza_margherita.png' },
-          { label: '4 Queijos', value: '/images/pizza_quatro_queijos.png' },
-          { label: 'Pepperoni', value: '/images/pizza_pepperoni.png' },
+          { label: 'Calabresa', value: '/assets/pizza_calabresa.png' },
+          { label: 'Margherita', value: '/assets/pizza_margherita.png' },
+          { label: '4 Queijos', value: '/assets/pizza_quatro_queijos.png' },
+          { label: 'Chocolate', value: '/assets/pizza_chocolate.png' },
+          { label: 'Gourmet Calabresa', value: '/assets/gourmet_calabresa.png' },
+          { label: 'Gourmet Margherita', value: '/assets/gourmet_margherita.png' },
+          { label: 'Gourmet 4 Queijos', value: '/assets/gourmet_quatro_queijos.png' },
           { label: 'Hero Pizza', value: '/assets/pizza_hero.png' }
         ];
       } else if (type === 'DRINK') {
         suggestions = [
-          { label: 'Bebida Padrão', value: '/assets/coca_cola.png' } // Usa imagem local da bebida
+          { label: 'Coca-Cola', value: '/assets/coca_cola.png' },
+          { label: 'Guaraná', value: '/assets/guarana.png' },
+          { label: 'Água', value: '/assets/agua.png' },
+          { label: 'Vinho', value: '/assets/vinho.png' },
+          { label: 'Energético', value: '/assets/energetico.png' },
+          { label: 'Suco/Gourmet', value: '/assets/gourmet_bebida.png' }
+        ];
+      } else if (type === 'DESSERT') {
+        suggestions = [
+          { label: 'Chocolate', value: '/assets/pizza_chocolate.png' },
+          { label: 'Gourmet Sobremesa', value: '/assets/gourmet_sobremesa.png' },
+          { label: 'Doce Morango', value: '/assets/gourmet_doce_morango.png' }
+        ];
+      } else if (type === 'SIDE') {
+        suggestions = [
+          { label: 'Fritas', value: '/assets/lanche_fritas.png' },
+          { label: 'Hambúrguer', value: '/assets/lanche_hamburguer.png' },
+          { label: 'Barca', value: '/assets/lanche_barca.png' },
+          { label: 'Xis', value: '/assets/lanche_xis.png' },
+          { label: 'Açaí', value: '/assets/acai_hero.png' }
+        ];
+      } else if (type === 'COMBO') {
+        suggestions = [
+          { label: 'Combo Família', value: '/images/banner_combo_familia.png' },
+          { label: 'Banner Pizza', value: '/assets/pizza_banner.png' }
         ];
       }
 
@@ -709,7 +736,17 @@ export default function AdminProductsPage() {
         const link = document.createElement('button');
         link.type = 'button';
         link.textContent = sug.label;
-        link.style.cssText = 'font-size: 10px; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--color-border); background: var(--color-surface-light); cursor: pointer;';
+        link.style.cssText = 'font-size: 10px; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--color-border); background: var(--color-surface-light); cursor: pointer; color: var(--color-text-primary); transition: all var(--transition-fast);';
+        
+        link.addEventListener('mouseenter', () => {
+          link.style.background = 'var(--color-surface-hover)';
+          link.style.borderColor = 'var(--color-primary)';
+        });
+        link.addEventListener('mouseleave', () => {
+          link.style.background = 'var(--color-surface-light)';
+          link.style.borderColor = 'var(--color-border)';
+        });
+
         link.addEventListener('click', () => {
           imageInput.value = sug.value;
         });

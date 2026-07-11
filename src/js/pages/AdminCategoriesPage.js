@@ -519,6 +519,7 @@ export default function AdminCategoriesPage() {
           <div class="input-group">
             <label class="input-label" for="form-cat-image">Imagem (Emoji ou URL)</label>
             <input class="input" type="text" id="form-cat-image" value="${category ? escapeHtml(category.image || category.icon || '') : ''}" placeholder="Ex: 🥤 ou URL da foto">
+            <div id="form-image-suggestions" style="margin-top: 4px; display: flex; flex-wrap: wrap; gap: 6px;"></div>
           </div>
 
           <!-- Ordem de Exibição -->
@@ -565,6 +566,58 @@ export default function AdminCategoriesPage() {
     // Manipula o submit com validações
     const modalEl = document.getElementById('dialog-container');
     if (!modalEl) return;
+
+    const imageInput = modalEl.querySelector('#form-cat-image');
+
+    // Popula sugestões de categoria
+    const renderImageSuggestions = () => {
+      const containerSug = modalEl.querySelector('#form-image-suggestions');
+      if (!containerSug || !imageInput) return;
+
+      containerSug.innerHTML = '';
+      
+      const suggestions = [
+        { label: '🍕 Pizzas', value: '🍕' },
+        { label: '🫓 Clássicas', value: '🫓' },
+        { label: '⭐ Especiais', value: '⭐' },
+        { label: '🥤 Bebidas', value: '🥤' },
+        { label: '🍔 Lanches', value: '🍔' },
+        { label: '🍧 Açaís', value: '🍧' },
+        { label: '🍮 Doces', value: '🍮' },
+        { label: '🍟 Acompanhamentos', value: '🍟' },
+        { label: '🍨 Sorvetes', value: '🍨' },
+        { label: '🍷 Vinhos', value: '🍷' },
+        { label: '🍺 Cervejas', value: '🍺' }
+      ];
+
+      const label = document.createElement('span');
+      label.textContent = 'Sugestões:';
+      label.style.cssText = 'font-size: 11px; color: var(--color-text-muted); display: flex; align-items: center;';
+      containerSug.appendChild(label);
+
+      suggestions.forEach(sug => {
+        const link = document.createElement('button');
+        link.type = 'button';
+        link.textContent = sug.label;
+        link.style.cssText = 'font-size: 10px; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--color-border); background: var(--color-surface-light); cursor: pointer; color: var(--color-text-primary); transition: all var(--transition-fast);';
+        
+        link.addEventListener('mouseenter', () => {
+          link.style.background = 'var(--color-surface-hover)';
+          link.style.borderColor = 'var(--color-primary)';
+        });
+        link.addEventListener('mouseleave', () => {
+          link.style.background = 'var(--color-surface-light)';
+          link.style.borderColor = 'var(--color-border)';
+        });
+        
+        link.addEventListener('click', () => {
+          imageInput.value = sug.value;
+        });
+        containerSug.appendChild(link);
+      });
+    };
+
+    renderImageSuggestions();
 
     const submitBtn = modalEl.querySelector('.dialog-footer button.btn-primary');
     submitBtn?.replaceWith(submitBtn.cloneNode(true)); // Limpa listeners

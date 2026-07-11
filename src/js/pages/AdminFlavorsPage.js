@@ -518,6 +518,7 @@ export default function AdminFlavorsPage() {
           <div class="input-group">
             <label class="input-label" for="form-flavor-image">Imagem (Emoji ou URL)</label>
             <input class="input" type="text" id="form-flavor-image" value="${flavor ? escapeHtml(flavor.image || '') : ''}" placeholder="Ex: 🍕 ou URL da foto">
+            <div id="form-image-suggestions" style="margin-top: 4px; display: flex; flex-wrap: wrap; gap: 6px;"></div>
           </div>
 
           <!-- Ordem de Exibição -->
@@ -557,6 +558,56 @@ export default function AdminFlavorsPage() {
 
     const modalEl = document.getElementById('dialog-container');
     if (!modalEl) return;
+
+    const imageInput = modalEl.querySelector('#form-flavor-image');
+
+    // Popula sugestões de imagem locais
+    const renderImageSuggestions = () => {
+      const containerSug = modalEl.querySelector('#form-image-suggestions');
+      if (!containerSug || !imageInput) return;
+
+      containerSug.innerHTML = '';
+      
+      const suggestions = [
+        { label: '🍕 Pizza', value: '🍕' },
+        { label: 'Calabresa', value: '/assets/pizza_calabresa.png' },
+        { label: 'Margherita', value: '/assets/pizza_margherita.png' },
+        { label: '4 Queijos', value: '/assets/pizza_quatro_queijos.png' },
+        { label: 'Chocolate', value: '/assets/pizza_chocolate.png' },
+        { label: 'Padrão', value: '/assets/pizza_hero.png' },
+        { label: 'Gourmet Calabresa', value: '/assets/gourmet_calabresa.png' },
+        { label: 'Gourmet Margherita', value: '/assets/gourmet_margherita.png' },
+        { label: 'Gourmet 4 Queijos', value: '/assets/gourmet_quatro_queijos.png' }
+      ];
+
+      const label = document.createElement('span');
+      label.textContent = 'Sugestões:';
+      label.style.cssText = 'font-size: 11px; color: var(--color-text-muted); display: flex; align-items: center;';
+      containerSug.appendChild(label);
+
+      suggestions.forEach(sug => {
+        const link = document.createElement('button');
+        link.type = 'button';
+        link.textContent = sug.label;
+        link.style.cssText = 'font-size: 10px; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--color-border); background: var(--color-surface-light); cursor: pointer; color: var(--color-text-primary); transition: all var(--transition-fast);';
+        
+        link.addEventListener('mouseenter', () => {
+          link.style.background = 'var(--color-surface-hover)';
+          link.style.borderColor = 'var(--color-primary)';
+        });
+        link.addEventListener('mouseleave', () => {
+          link.style.background = 'var(--color-surface-light)';
+          link.style.borderColor = 'var(--color-border)';
+        });
+        
+        link.addEventListener('click', () => {
+          imageInput.value = sug.value;
+        });
+        containerSug.appendChild(link);
+      });
+    };
+
+    renderImageSuggestions();
 
     const submitBtn = modalEl.querySelector('.dialog-footer button.btn-primary');
     submitBtn?.replaceWith(submitBtn.cloneNode(true)); // Limpa listeners
