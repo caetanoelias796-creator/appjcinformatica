@@ -3,7 +3,7 @@
  * Camada de serviço de persistência de sabores integrada ao Firestore.
  */
 
-import { db, isFirebaseActive } from './firebase.js';
+import { db, isFirebaseActive, withTimeout } from './firebase.js';
 import { 
   collection, 
   doc, 
@@ -106,7 +106,7 @@ export const FlavorService = {
 
     try {
       const collRef = collection(db, 'flavors');
-      const snapshot = await getDocs(collRef);
+      const snapshot = await withTimeout(getDocs(collRef), 2500);
       let list = [];
       snapshot.forEach(doc => {
         list.push({ id: doc.id, ...doc.data() });

@@ -3,7 +3,7 @@
  * Camada de serviço de persistência de produtos integrada ao Firestore e Storage.
  */
 
-import { db, storage, isFirebaseActive } from './firebase.js';
+import { db, storage, isFirebaseActive, withTimeout } from './firebase.js';
 import { 
   collection, 
   doc, 
@@ -73,7 +73,7 @@ export const ProductService = {
     
     try {
       const q = query(collection(db, 'products'), where('isAvailable', '==', true));
-      const snapshot = await getDocs(q);
+      const snapshot = await withTimeout(getDocs(q), 2500);
       const list = [];
       snapshot.forEach(doc => {
         list.push({ id: doc.id, ...doc.data() });
@@ -98,7 +98,7 @@ export const ProductService = {
 
     try {
       const docRef = doc(db, 'products', id);
-      const docSnap = await getDoc(docRef);
+      const docSnap = await withTimeout(getDoc(docRef), 2500);
       if (!docSnap.exists()) {
         throw new Error('Produto não encontrado');
       }
@@ -127,7 +127,7 @@ export const ProductService = {
       } else {
         q = query(collection(db, 'products'), where('isAvailable', '==', true), where('category', '==', categoryId));
       }
-      const snapshot = await getDocs(q);
+      const snapshot = await withTimeout(getDocs(q), 2500);
       const list = [];
       snapshot.forEach(doc => {
         list.push({ id: doc.id, ...doc.data() });

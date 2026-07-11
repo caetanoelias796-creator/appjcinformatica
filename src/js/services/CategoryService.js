@@ -3,7 +3,7 @@
  * Camada de serviço de persistência de categorias integrada ao Firestore e Storage.
  */
 
-import { db, storage, isFirebaseActive } from './firebase.js';
+import { db, storage, isFirebaseActive, withTimeout } from './firebase.js';
 import { 
   collection, 
   doc, 
@@ -71,7 +71,7 @@ export const CategoryService = {
     try {
       // Retorna apenas categorias ativas, excluindo a categoria virtual 'all' do Firestore se existir
       const q = query(collection(db, 'categories'), where('active', '==', true));
-      const snapshot = await getDocs(q);
+      const snapshot = await withTimeout(getDocs(q), 2500);
       const list = [];
       snapshot.forEach(doc => {
         list.push({ id: doc.id, ...doc.data() });

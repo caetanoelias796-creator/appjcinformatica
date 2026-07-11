@@ -40,3 +40,28 @@ if (hasConfig) {
 
 export const isFirebaseActive = hasConfig && !!db;
 export { db, auth, storage };
+
+/**
+ * Executa uma Promise com limite de tempo (timeout).
+ * Útil para evitar que requisições ao Firebase fiquem travadas infinitamente
+ * quando o banco de dados não está ativado ou está inacessível.
+ */
+export async function withTimeout(promise, ms = 2500) {
+  let timeoutId;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => {
+      reject(new Error('Firebase connection timeout'));
+    }, ms);
+  });
+  
+  return Promise.race([
+    promise.then(val => {
+      clearTimeout(timeoutId);
+      return val;
+    }),
+    timeoutPromise
+  ]).catch(err => {
+    if (timeoutId) clearTimeout(timeoutId);
+    throw err;
+  });
+}

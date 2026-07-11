@@ -3,7 +3,7 @@
  * Camada de serviço de persistência de pedidos integrada ao Firestore.
  */
 
-import { db, isFirebaseActive } from './firebase.js';
+import { db, isFirebaseActive, withTimeout } from './firebase.js';
 import { 
   collection, 
   doc, 
@@ -66,7 +66,7 @@ export const OrderService = {
         return value === undefined ? null : value;
       }));
 
-      await setDoc(doc(db, 'orders', orderId), sanitizedOrder);
+      await withTimeout(setDoc(doc(db, 'orders', orderId), sanitizedOrder), 2500);
       return newOrder;
     } catch (err) {
       console.error('[OrderService] Erro ao salvar pedido no Firestore:', err);
@@ -96,7 +96,7 @@ export const OrderService = {
       const collRef = collection(db, 'orders');
       // Queries complexas no Firestore exigem índices, então fazemos ordenação simples por data e filtramos em memória para MVP
       const q = query(collRef, orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(q);
+      const snapshot = await withTimeout(getDocs(q), 2500);
       let list = [];
       snapshot.forEach(doc => {
         list.push({ id: doc.id, ...doc.data() });
