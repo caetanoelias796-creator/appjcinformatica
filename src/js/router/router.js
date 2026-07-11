@@ -79,12 +79,14 @@ async function handleRoute() {
       `;
       let unsubscribe;
       unsubscribe = AuthService.subscribe((user) => {
-        if (unsubscribe) {
-          unsubscribe();
-        } else {
-          setTimeout(() => unsubscribe?.(), 0);
+        if (AuthService.isReady()) {
+          if (unsubscribe) {
+            unsubscribe();
+          } else {
+            setTimeout(() => unsubscribe?.(), 0);
+          }
+          handleRoute();
         }
-        handleRoute();
       });
       return;
     }
